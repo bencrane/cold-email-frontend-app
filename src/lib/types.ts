@@ -14,6 +14,23 @@ export interface Tool {
   comparisons: { tool: string; summary: string }[];
   useCases: { title: string; description: string }[];
   features: string[];
+  g2?: { rating: number; reviewCount: number; url: string };
+}
+
+export interface ToolReview {
+  id: string;
+  toolSlug: string;
+  reviewerName: string;
+  reviewerEmail: string;
+  reviewerTitle?: string;
+  reviewerCompany?: string;
+  rating: number;
+  title: string;
+  body: string;
+  useCase?: string;
+  usageDuration?: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: string;
 }
 
 export interface Agency {
