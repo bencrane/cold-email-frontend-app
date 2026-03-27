@@ -165,7 +165,7 @@ export default function LeadMagnetBuilder() {
           <div>
             <label className={labelClass}>Custom Slug</label>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-400">{agencyProfile.resourcesUrl}/</span>
+              <span className="text-xs text-gray-400">coldemail.com{agencyProfile.resourcesUrl}/</span>
               <input
                 className={inputClass}
                 value={customSlug}
@@ -259,7 +259,7 @@ export default function LeadMagnetBuilder() {
             </div>
           </div>
           <p className="text-xs text-gray-400">
-            {agencyProfile.resourcesUrl}/{slug}
+            coldemail.com{agencyProfile.resourcesUrl}/{slug}
           </p>
         </div>
       </div>

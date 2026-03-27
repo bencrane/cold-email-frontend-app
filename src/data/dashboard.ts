@@ -14,6 +14,7 @@ export type LeadMagnet = {
   formFields: { name: boolean; phone: boolean; company: boolean };
   buttonText: string;
   thankYouMessage: string;
+  noIndex: boolean;
   views: number;
   submissions: number;
   createdAt: string;
@@ -65,7 +66,7 @@ export const agencyProfile = {
   bookingUrl: "https://calendly.com/growthenginex/discovery",
   showBookingButton: true,
   publicUrl: "/agencies/growthenginex",
-  resourcesUrl: "resources.coldemail.com/growthenginex",
+  resourcesUrl: "/agencies/growthenginex/resources",
   team: [
     { name: "Marcus Chen", role: "Founder & CEO", linkedinUrl: "https://linkedin.com/in/marcuschen", initials: "MC" },
     { name: "Sarah Kim", role: "Head of Deliverability", linkedinUrl: "https://linkedin.com/in/sarahkim", initials: "SK" },
@@ -104,6 +105,7 @@ export const leadMagnets: LeadMagnet[] = [
     formFields: { name: true, phone: false, company: true },
     buttonText: "Download the Checklist",
     thankYouMessage: "Your checklist is ready! Click the button below to download.",
+    noIndex: false,
     views: 1847,
     submissions: 312,
     createdAt: "2026-02-15",
@@ -120,6 +122,7 @@ export const leadMagnets: LeadMagnet[] = [
     formFields: { name: true, phone: false, company: false },
     buttonText: "Get the Swipe File",
     thankYouMessage: "Here's your swipe file! Start using these subject lines today.",
+    noIndex: false,
     views: 3214,
     submissions: 589,
     createdAt: "2026-01-22",
@@ -136,6 +139,7 @@ export const leadMagnets: LeadMagnet[] = [
     formFields: { name: true, phone: true, company: true },
     buttonText: "Watch the Masterclass",
     thankYouMessage: "Enjoy the masterclass! The video is ready to play below.",
+    noIndex: false,
     views: 956,
     submissions: 178,
     createdAt: "2026-03-05",
