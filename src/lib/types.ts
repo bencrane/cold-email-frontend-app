@@ -44,16 +44,48 @@ export interface Agency {
   bookingUrl?: string;
 }
 
-export interface Playbook {
+export type EditorialType =
+  | "playbook"
+  | "spotlight"
+  | "breakdown"
+  | "guide"
+  | "opinion";
+
+export type CoverStyle = "dark" | "blue" | "neutral";
+
+export interface EditorialSubject {
+  name: string;
+  role: string;
+  company: string;
+  url: string;
+  linkedinUrl?: string;
+  youtubeUrl?: string;
+}
+
+export interface VideoSource {
+  title: string;
+  url: string;
+  creator: string;
+}
+
+export interface EditorialContent {
   slug: string;
   title: string;
   description: string;
+  type: EditorialType;
   tag: string;
   readTime: string;
   publishedAt: string;
+  featured: boolean;
+  coverStyle: CoverStyle;
   tools?: string[];
   agencies?: string[];
+  subject?: EditorialSubject;
+  videoSource?: VideoSource;
 }
+
+/** @deprecated Use EditorialContent instead */
+export type Playbook = EditorialContent;
 
 export interface ToolCategory {
   slug: string;
