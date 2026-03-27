@@ -21,7 +21,7 @@ export default function CourseSignup() {
       />
       <button
         type="submit"
-        className="cursor-pointer whitespace-nowrap rounded-[var(--radius-sm)] border-none bg-white px-6 py-[13px] text-sm font-semibold text-text-primary transition-colors hover:bg-[#F0F0F0]"
+        className="cursor-pointer whitespace-nowrap rounded-[var(--radius-sm)] border-none bg-white px-6 py-[13px] text-sm font-semibold text-text-primary transition-colors hover:bg-surface-hover"
       >
         Start Free Course
       </button>

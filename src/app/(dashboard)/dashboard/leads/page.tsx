@@ -78,20 +78,20 @@ export default function LeadsPage() {
     sortKey === key ? (sortDir === "asc" ? " ↑" : " ↓") : "";
 
   const inputClass =
-    "rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500";
+    "rounded-lg border border-border px-3 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent";
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Leads</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold tracking-tight text-text-primary">Leads</h1>
+          <p className="mt-1 text-sm text-text-tertiary">
             {filtered.length} lead{filtered.length !== 1 ? "s" : ""} captured across all lead magnets.
           </p>
         </div>
         <button
           onClick={exportCSV}
-          className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+          className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary transition hover:bg-bg"
         >
           Export to CSV
         </button>
@@ -121,11 +121,11 @@ export default function LeadsPage() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-gray-200 bg-white">
+      <div className="rounded-[var(--radius)] border border-border bg-surface">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-gray-200 text-xs font-medium uppercase tracking-wider text-gray-500">
+              <tr className="border-b border-border text-xs font-medium uppercase tracking-wider text-text-tertiary">
                 {(
                   [
                     ["name", "Name"],
@@ -138,7 +138,7 @@ export default function LeadsPage() {
                   <th key={key} className="px-5 py-3">
                     <button
                       onClick={() => handleSort(key)}
-                      className="inline-flex items-center gap-1 hover:text-gray-700"
+                      className="inline-flex items-center gap-1 hover:text-text-secondary"
                     >
                       {label}
                       {sortIcon(key)}
@@ -147,7 +147,7 @@ export default function LeadsPage() {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border-light">
               {filtered.map((lead) => (
                 <>
                   <tr
@@ -155,43 +155,43 @@ export default function LeadsPage() {
                     onClick={() =>
                       setExpandedId(expandedId === lead.id ? null : lead.id)
                     }
-                    className="cursor-pointer hover:bg-gray-50"
+                    className="cursor-pointer hover:bg-bg"
                   >
-                    <td className="whitespace-nowrap px-5 py-3 font-medium text-gray-900">
+                    <td className="whitespace-nowrap px-5 py-3 font-medium text-text-primary">
                       {lead.name}
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-gray-600">
+                    <td className="whitespace-nowrap px-5 py-3 text-text-secondary">
                       {lead.email}
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-gray-600">
+                    <td className="whitespace-nowrap px-5 py-3 text-text-secondary">
                       {lead.company ?? "—"}
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-gray-600">
+                    <td className="whitespace-nowrap px-5 py-3 text-text-secondary">
                       {lead.leadMagnetName}
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-gray-400">
+                    <td className="whitespace-nowrap px-5 py-3 text-text-tertiary">
                       {formatDate(lead.capturedAt)}
                     </td>
                   </tr>
                   {expandedId === lead.id && (
                     <tr key={`${lead.id}-detail`}>
-                      <td colSpan={5} className="bg-gray-50 px-5 py-4">
+                      <td colSpan={5} className="bg-bg px-5 py-4">
                         <div className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
                           <div>
-                            <p className="text-xs font-medium text-gray-500">Full Name</p>
-                            <p className="text-gray-900">{lead.name}</p>
+                            <p className="text-xs font-medium text-text-tertiary">Full Name</p>
+                            <p className="text-text-primary">{lead.name}</p>
                           </div>
                           <div>
-                            <p className="text-xs font-medium text-gray-500">Email</p>
-                            <p className="text-gray-900">{lead.email}</p>
+                            <p className="text-xs font-medium text-text-tertiary">Email</p>
+                            <p className="text-text-primary">{lead.email}</p>
                           </div>
                           <div>
-                            <p className="text-xs font-medium text-gray-500">Phone</p>
-                            <p className="text-gray-900">{lead.phone ?? "Not provided"}</p>
+                            <p className="text-xs font-medium text-text-tertiary">Phone</p>
+                            <p className="text-text-primary">{lead.phone ?? "Not provided"}</p>
                           </div>
                           <div>
-                            <p className="text-xs font-medium text-gray-500">Company</p>
-                            <p className="text-gray-900">{lead.company ?? "Not provided"}</p>
+                            <p className="text-xs font-medium text-text-tertiary">Company</p>
+                            <p className="text-text-primary">{lead.company ?? "Not provided"}</p>
                           </div>
                         </div>
                       </td>

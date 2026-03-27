@@ -4,6 +4,7 @@ import { tools, getToolBySlug } from "@/data/tools";
 import { agencies } from "@/data/agencies";
 import { categories } from "@/data/categories";
 import { createMetadata } from "@/lib/seo";
+import Breadcrumb from "@/components/ui/breadcrumb";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -48,13 +49,13 @@ export default async function ToolPage({
   return (
     <main className="mx-auto max-w-[var(--max-width)] px-6 pb-20 pt-12">
       {/* Breadcrumb */}
-      <div className="mb-8 flex items-center gap-2 text-sm text-text-tertiary">
-        <Link href="/tools" className="text-text-tertiary no-underline hover:text-text-secondary">
-          Tools
-        </Link>
-        <span>/</span>
-        <span className="text-text-primary">{tool.name}</span>
-      </div>
+      <Breadcrumb
+        className="mb-8"
+        items={[
+          { label: "Tools", href: "/tools" },
+          { label: tool.name },
+        ]}
+      />
 
       {/* Header */}
       <div className="mb-10 flex items-start gap-5">
@@ -96,26 +97,26 @@ export default async function ToolPage({
           {/* Pros & Cons */}
           <section className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="rounded-[var(--radius)] border border-border bg-surface p-6">
-              <h3 className="mb-4 text-base font-semibold text-green-700">
+              <h3 className="mb-4 text-base font-semibold text-success-text">
                 What&apos;s Good
               </h3>
               <ul className="space-y-2.5">
                 {tool.prosAndCons.good.map((pro) => (
                   <li key={pro} className="flex items-start gap-2 text-sm text-text-secondary">
-                    <span className="mt-0.5 text-green-600">✓</span>
+                    <span className="mt-0.5 text-success">✓</span>
                     {pro}
                   </li>
                 ))}
               </ul>
             </div>
             <div className="rounded-[var(--radius)] border border-border bg-surface p-6">
-              <h3 className="mb-4 text-base font-semibold text-amber-700">
+              <h3 className="mb-4 text-base font-semibold text-warning-text">
                 Watch Out For
               </h3>
               <ul className="space-y-2.5">
                 {tool.prosAndCons.watchOut.map((con) => (
                   <li key={con} className="flex items-start gap-2 text-sm text-text-secondary">
-                    <span className="mt-0.5 text-amber-600">!</span>
+                    <span className="mt-0.5 text-warning">!</span>
                     {con}
                   </li>
                 ))}
@@ -210,7 +211,7 @@ export default async function ToolPage({
               href={tool.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 block w-full rounded-[var(--radius-sm)] bg-text-primary py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors hover:bg-[#2A2D35]"
+              className="mt-4 block w-full rounded-[var(--radius-sm)] bg-text-primary py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors hover:bg-text-primary-hover"
             >
               Visit {tool.name} →
             </a>

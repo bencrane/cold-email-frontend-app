@@ -56,18 +56,18 @@ export default function AnalyticsPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Analytics</h1>
-          <p className="mt-1 text-sm text-gray-500">Track your profile and lead magnet performance.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-text-primary">Analytics</h1>
+          <p className="mt-1 text-sm text-text-tertiary">Track your profile and lead magnet performance.</p>
         </div>
-        <div className="flex gap-1 rounded-lg border border-gray-200 bg-white p-1">
+        <div className="flex gap-1 rounded-lg border border-border bg-surface p-1">
           {rangeButtons.map((btn) => (
             <button
               key={btn.value}
               onClick={() => setRange(btn.value)}
               className={`rounded-md px-3 py-1.5 text-xs font-medium transition ${
                 range === btn.value
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-600 hover:bg-gray-50"
+                  ? "bg-accent text-white"
+                  : "text-text-secondary hover:bg-bg"
               }`}
             >
               {btn.label}
@@ -77,10 +77,10 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Profile Analytics */}
-      <div className="rounded-xl border border-gray-200 bg-white p-5">
+      <div className="rounded-[var(--radius)] border border-border bg-surface p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-gray-900">Profile Views</h2>
-          <p className="text-2xl font-bold text-gray-900">{totalViews.toLocaleString()}</p>
+          <h2 className="text-base font-semibold text-text-primary">Profile Views</h2>
+          <p className="text-2xl font-bold text-text-primary">{totalViews.toLocaleString()}</p>
         </div>
         <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full" preserveAspectRatio="xMidYMid meet">
           {/* Grid lines */}
@@ -121,41 +121,41 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Lead Magnet Analytics */}
-      <div className="rounded-xl border border-gray-200 bg-white p-5">
-        <h2 className="mb-4 text-base font-semibold text-gray-900">Lead Magnet Performance</h2>
+      <div className="rounded-[var(--radius)] border border-border bg-surface p-5">
+        <h2 className="mb-4 text-base font-semibold text-text-primary">Lead Magnet Performance</h2>
 
         {/* Bar chart - views vs submissions */}
         <div className="mb-6 space-y-4">
           {magnetStats.map((m) => (
             <div key={m.id} className="space-y-1.5">
-              <p className="text-sm font-medium text-gray-700">{m.name}</p>
+              <p className="text-sm font-medium text-text-secondary">{m.name}</p>
               <div className="flex items-center gap-3">
                 <div className="flex-1">
-                  <div className="h-5 rounded bg-gray-100">
+                  <div className="h-5 rounded bg-surface-muted">
                     <div
-                      className="h-5 rounded bg-blue-500"
+                      className="h-5 rounded bg-accent"
                       style={{ width: `${(m.views / (maxMagnetViews || 1)) * 100}%` }}
                     />
                   </div>
                 </div>
-                <span className="w-16 text-right text-xs text-gray-500">{m.views.toLocaleString()} views</span>
+                <span className="w-16 text-right text-xs text-text-tertiary">{m.views.toLocaleString()} views</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex-1">
-                  <div className="h-5 rounded bg-gray-100">
+                  <div className="h-5 rounded bg-surface-muted">
                     <div
-                      className="h-5 rounded bg-blue-300"
+                      className="h-5 rounded bg-accent-muted"
                       style={{ width: `${(m.submissions / (maxMagnetViews || 1)) * 100}%` }}
                     />
                   </div>
                 </div>
-                <span className="w-16 text-right text-xs text-gray-500">{m.submissions.toLocaleString()} subs</span>
+                <span className="w-16 text-right text-xs text-text-tertiary">{m.submissions.toLocaleString()} subs</span>
               </div>
             </div>
           ))}
-          <div className="flex items-center gap-4 text-xs text-gray-400">
-            <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded bg-blue-500" /> Views</span>
-            <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded bg-blue-300" /> Submissions</span>
+          <div className="flex items-center gap-4 text-xs text-text-tertiary">
+            <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded bg-accent" /> Views</span>
+            <span className="flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded bg-accent-muted" /> Submissions</span>
           </div>
         </div>
 
@@ -163,20 +163,20 @@ export default function AnalyticsPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-gray-200 text-xs font-medium uppercase tracking-wider text-gray-500">
+              <tr className="border-b border-border text-xs font-medium uppercase tracking-wider text-text-tertiary">
                 <th className="px-3 py-2">Lead Magnet</th>
                 <th className="px-3 py-2 text-right">Views</th>
                 <th className="px-3 py-2 text-right">Submissions</th>
                 <th className="px-3 py-2 text-right">Conv. Rate</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border-light">
               {magnetStats.map((m) => (
-                <tr key={m.id} className="hover:bg-gray-50">
-                  <td className="px-3 py-2 font-medium text-gray-900">{m.name}</td>
-                  <td className="px-3 py-2 text-right text-gray-600">{m.views.toLocaleString()}</td>
-                  <td className="px-3 py-2 text-right text-gray-600">{m.submissions.toLocaleString()}</td>
-                  <td className="px-3 py-2 text-right text-gray-600">{m.rate}%</td>
+                <tr key={m.id} className="hover:bg-bg">
+                  <td className="px-3 py-2 font-medium text-text-primary">{m.name}</td>
+                  <td className="px-3 py-2 text-right text-text-secondary">{m.views.toLocaleString()}</td>
+                  <td className="px-3 py-2 text-right text-text-secondary">{m.submissions.toLocaleString()}</td>
+                  <td className="px-3 py-2 text-right text-text-secondary">{m.rate}%</td>
                 </tr>
               ))}
             </tbody>

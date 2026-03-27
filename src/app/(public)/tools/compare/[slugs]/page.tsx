@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { tools, getToolBySlug } from "@/data/tools";
 import { createMetadata } from "@/lib/seo";
+import Breadcrumb from "@/components/ui/breadcrumb";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -47,11 +48,13 @@ export default async function ComparePage({
 
   return (
     <main className="mx-auto max-w-[var(--max-width)] px-6 pb-20 pt-12">
-      <div className="mb-8 flex items-center gap-2 text-sm text-text-tertiary">
-        <Link href="/tools" className="text-text-tertiary no-underline hover:text-text-secondary">Tools</Link>
-        <span>/</span>
-        <span className="text-text-primary">Compare</span>
-      </div>
+      <Breadcrumb
+        className="mb-8"
+        items={[
+          { label: "Tools", href: "/tools" },
+          { label: "Compare" },
+        ]}
+      />
 
       <h1 className="mb-3 font-display text-[clamp(32px,4vw,44px)] font-normal tracking-[-1px] text-text-primary">
         {toolA.name} vs {toolB.name}

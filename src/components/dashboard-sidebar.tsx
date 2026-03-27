@@ -21,10 +21,10 @@ export default function DashboardSidebar() {
   }
 
   return (
-    <aside className="fixed left-0 top-0 z-30 flex h-full w-56 flex-col border-r border-gray-200 bg-white">
-      <div className="flex h-14 items-center border-b border-gray-200 px-5">
-        <Link href="/" className="text-lg font-bold tracking-tight text-gray-900">
-          ColdEmail<span className="text-blue-600">.com</span>
+    <aside className="fixed left-0 top-0 z-30 flex h-full w-56 flex-col border-r border-border bg-surface">
+      <div className="flex h-14 items-center border-b border-border px-5">
+        <Link href="/" className="text-lg font-bold tracking-tight text-text-primary">
+          ColdEmail<span className="text-accent">.com</span>
         </Link>
       </div>
       <nav className="flex-1 px-3 py-4">
@@ -35,8 +35,8 @@ export default function DashboardSidebar() {
                 href={item.href}
                 className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                   isActive(item.href)
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    ? "bg-accent-light text-accent"
+                    : "text-text-secondary hover:bg-bg hover:text-text-primary"
                 }`}
               >
                 <span className="text-base">{item.icon}</span>

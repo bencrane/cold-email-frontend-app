@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createMetadata } from "@/lib/seo";
+import Breadcrumb from "@/components/ui/breadcrumb";
 import type { Metadata } from "next";
 
 const playbooksData: Record<
@@ -67,12 +68,12 @@ export default async function PlaybookPage({
 
   return (
     <main className="mx-auto max-w-[720px] px-6 pb-20 pt-12">
-      <div className="mb-8 flex items-center gap-2 text-sm text-text-tertiary">
-        <Link href="/playbooks" className="text-text-tertiary no-underline hover:text-text-secondary">
-          Playbooks
-        </Link>
-        <span>/</span>
-      </div>
+      <Breadcrumb
+        className="mb-8"
+        items={[
+          { label: "Playbooks", href: "/playbooks" },
+        ]}
+      />
 
       <div className="mb-2 text-[11px] font-semibold uppercase tracking-[1px] text-accent">
         {pb.tag}

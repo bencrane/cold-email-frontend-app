@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { tools } from "@/data/tools";
 import { agencies } from "@/data/agencies";
+import Badge from "@/components/ui/badge";
 import CourseSignup from "@/components/ui/course-signup";
 
 const heroStats = [
@@ -56,7 +57,7 @@ export default function HomePage() {
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/tools"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-text-primary px-6 py-3 text-sm font-semibold text-white no-underline transition-colors hover:bg-[#2A2D35]"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-text-primary px-6 py-3 text-sm font-semibold text-white no-underline transition-colors hover:bg-text-primary-hover"
           >
             Browse Tools
           </Link>
@@ -208,9 +209,9 @@ export default function HomePage() {
                 <h3 className="mb-1 text-base font-semibold tracking-[-0.2px] text-text-primary">
                   {agency.name}
                   {agency.verified && (
-                    <span className="ml-2 inline-block rounded-full bg-green-50 px-2 py-0.5 align-middle text-[11px] font-semibold text-green-700">
+                    <Badge variant="verified" className="ml-2 align-middle">
                       Verified
-                    </span>
+                    </Badge>
                   )}
                 </h3>
                 <p className="mb-3 line-clamp-2 text-sm leading-[1.5] text-text-secondary">

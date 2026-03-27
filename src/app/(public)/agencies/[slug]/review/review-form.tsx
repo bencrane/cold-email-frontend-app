@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import StarRating from "@/components/ui/star-rating";
+import { FormInput, FormTextarea } from "@/components/ui/form-input";
 
 export default function ReviewForm({
   agencyName,
@@ -11,7 +13,6 @@ export default function ReviewForm({
 }) {
   const [submitted, setSubmitted] = useState(false);
   const [rating, setRating] = useState<number | null>(null);
-  const [hoveredStar, setHoveredStar] = useState<number | null>(null);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -42,95 +43,55 @@ export default function ReviewForm({
     );
   }
 
-  const inputClass =
-    "w-full rounded-lg border border-border bg-bg px-3 py-2.5 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent";
-  const labelClass = "mb-1.5 block text-sm font-medium text-text-secondary";
-
   return (
     <form
       onSubmit={handleSubmit}
       className="space-y-5 rounded-[var(--radius)] border border-border bg-surface p-6"
     >
-      <div>
-        <label htmlFor="name" className={labelClass}>
-          Name *
-        </label>
-        <input
-          id="name"
-          name="name"
-          required
-          className={inputClass}
-          placeholder="Your full name"
-        />
-      </div>
+      <FormInput
+        label="Name *"
+        id="name"
+        name="name"
+        required
+        placeholder="Your full name"
+      />
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="jobTitle" className={labelClass}>
-            Job Title *
-          </label>
-          <input
-            id="jobTitle"
-            name="jobTitle"
-            required
-            className={inputClass}
-            placeholder="e.g. VP of Sales"
-          />
-        </div>
-        <div>
-          <label htmlFor="company" className={labelClass}>
-            Company *
-          </label>
-          <input
-            id="company"
-            name="company"
-            required
-            className={inputClass}
-            placeholder="Your company name"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label htmlFor="text" className={labelClass}>
-          Your Review *
-        </label>
-        <textarea
-          id="text"
-          name="text"
+        <FormInput
+          label="Job Title *"
+          id="jobTitle"
+          name="jobTitle"
           required
-          rows={5}
-          className={`${inputClass} resize-none`}
-          placeholder="Share your experience working with this agency..."
+          placeholder="e.g. VP of Sales"
+        />
+        <FormInput
+          label="Company *"
+          id="company"
+          name="company"
+          required
+          placeholder="Your company name"
         />
       </div>
+
+      <FormTextarea
+        label="Your Review *"
+        id="text"
+        name="text"
+        required
+        rows={5}
+        placeholder="Share your experience working with this agency..."
+      />
 
       {/* Star rating */}
       <div>
-        <span className={labelClass}>Rating (optional)</span>
-        <div className="flex gap-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              onClick={() => setRating(rating === star ? null : star)}
-              onMouseEnter={() => setHoveredStar(star)}
-              onMouseLeave={() => setHoveredStar(null)}
-              className="p-0.5 text-2xl transition-colors"
-            >
-              <span
-                className={
-                  (hoveredStar !== null ? star <= hoveredStar : star <= (rating ?? 0))
-                    ? "text-yellow-400"
-                    : "text-gray-300"
-                }
-              >
-                ★
-              </span>
-            </button>
-          ))}
+        <span className="mb-1.5 block text-sm font-medium text-text-secondary">Rating (optional)</span>
+        <div className="flex items-center gap-2">
+          <StarRating
+            value={rating ?? 0}
+            onChange={(v) => setRating(v === 0 ? null : v)}
+          />
           {rating && (
-            <span className="ml-2 self-center text-sm text-text-tertiary">
+            <span className="text-sm text-text-tertiary">
               {rating}/5
             </span>
           )}
@@ -139,7 +100,7 @@ export default function ReviewForm({
 
       <button
         type="submit"
-        className="w-full rounded-[var(--radius-sm)] bg-text-primary py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#2A2D35]"
+        className="w-full rounded-[var(--radius-sm)] bg-text-primary py-2.5 text-sm font-semibold text-white transition-colors hover:bg-text-primary-hover"
       >
         Submit Review
       </button>

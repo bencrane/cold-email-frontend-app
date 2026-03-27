@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { dashboardStats, leads, agencyProfile } from "@/data/dashboard";
+import StatCard from "@/components/ui/stat-card";
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
@@ -23,10 +24,10 @@ export default function DashboardOverview() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-text-primary">
           Welcome back, {agencyProfile.name}
         </h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-text-tertiary">
           Here&apos;s how your profile and lead magnets are performing.
         </p>
       </div>
@@ -34,24 +35,22 @@ export default function DashboardOverview() {
       {/* Stat Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
-          <div
+          <StatCard
             key={stat.label}
-            className="rounded-xl border border-gray-200 bg-white p-5"
-          >
-            <p className="text-sm font-medium text-gray-500">{stat.label}</p>
-            <p className="mt-1 text-2xl font-bold text-gray-900">{stat.value}</p>
-            <p className="mt-0.5 text-xs text-gray-400">{stat.sub}</p>
-          </div>
+            label={stat.label}
+            value={stat.value}
+            sub={stat.sub}
+          />
         ))}
       </div>
 
       {/* Recent Leads */}
-      <div className="rounded-xl border border-gray-200 bg-white">
-        <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
-          <h2 className="text-base font-semibold text-gray-900">Recent Leads</h2>
+      <div className="rounded-[var(--radius)] border border-border bg-surface">
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
+          <h2 className="text-base font-semibold text-text-primary">Recent Leads</h2>
           <Link
             href="/dashboard/leads"
-            className="text-sm font-medium text-blue-600 hover:text-blue-700"
+            className="text-sm font-medium text-accent hover:text-accent-hover"
           >
             View all →
           </Link>
@@ -59,26 +58,26 @@ export default function DashboardOverview() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-gray-100 text-xs font-medium uppercase tracking-wider text-gray-500">
+              <tr className="border-b border-border-light text-xs font-medium uppercase tracking-wider text-text-tertiary">
                 <th className="px-5 py-3">Name</th>
                 <th className="px-5 py-3">Email</th>
                 <th className="px-5 py-3">Lead Magnet</th>
                 <th className="px-5 py-3">Captured</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border-light">
               {recentLeads.map((lead) => (
-                <tr key={lead.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-5 py-3 font-medium text-gray-900">
+                <tr key={lead.id} className="hover:bg-bg">
+                  <td className="whitespace-nowrap px-5 py-3 font-medium text-text-primary">
                     {lead.name}
                   </td>
-                  <td className="whitespace-nowrap px-5 py-3 text-gray-600">
+                  <td className="whitespace-nowrap px-5 py-3 text-text-secondary">
                     {lead.email}
                   </td>
-                  <td className="whitespace-nowrap px-5 py-3 text-gray-600">
+                  <td className="whitespace-nowrap px-5 py-3 text-text-secondary">
                     {lead.leadMagnetName}
                   </td>
-                  <td className="whitespace-nowrap px-5 py-3 text-gray-400">
+                  <td className="whitespace-nowrap px-5 py-3 text-text-tertiary">
                     {formatDate(lead.capturedAt)}
                   </td>
                 </tr>
@@ -90,7 +89,7 @@ export default function DashboardOverview() {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="mb-4 text-base font-semibold text-gray-900">Quick Actions</h2>
+        <h2 className="mb-4 text-base font-semibold text-text-primary">Quick Actions</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[
             { title: "Create a Lead Magnet", desc: "Build a gated landing page to capture leads", href: "/dashboard/lead-magnets/new" },
@@ -100,12 +99,12 @@ export default function DashboardOverview() {
             <Link
               key={action.href}
               href={action.href}
-              className="group rounded-xl border border-gray-200 bg-white p-5 transition hover:border-blue-200 hover:shadow-sm"
+              className="group rounded-[var(--radius)] border border-border bg-surface p-5 transition hover:border-accent-muted hover:shadow-[var(--card-shadow)]"
             >
-              <h3 className="font-semibold text-gray-900 group-hover:text-blue-600">
+              <h3 className="font-semibold text-text-primary group-hover:text-accent">
                 {action.title}
               </h3>
-              <p className="mt-1 text-sm text-gray-500">{action.desc}</p>
+              <p className="mt-1 text-sm text-text-tertiary">{action.desc}</p>
             </Link>
           ))}
         </div>
