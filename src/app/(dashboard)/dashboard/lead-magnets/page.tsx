@@ -1,27 +1,28 @@
 import Link from "next/link";
 import { leadMagnets, agencyProfile } from "@/data/dashboard";
+import Badge from "@/components/ui/badge";
 
 export default function LeadMagnetsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Lead Magnets</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your gated content pages.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-text-primary">Lead Magnets</h1>
+          <p className="mt-1 text-sm text-text-tertiary">Manage your gated content pages.</p>
         </div>
         <Link
           href="/dashboard/lead-magnets/new"
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+          className="rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent-hover"
         >
           Create New Lead Magnet
         </Link>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white">
+      <div className="rounded-[var(--radius)] border border-border bg-surface">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-gray-200 text-xs font-medium uppercase tracking-wider text-gray-500">
+              <tr className="border-b border-border text-xs font-medium uppercase tracking-wider text-text-tertiary">
                 <th className="px-5 py-3">Name</th>
                 <th className="px-5 py-3">URL</th>
                 <th className="px-5 py-3">Status</th>
@@ -31,43 +32,37 @@ export default function LeadMagnetsPage() {
                 <th className="px-5 py-3">Created</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-border-light">
               {leadMagnets.map((lm) => {
                 const rate =
                   lm.views > 0
                     ? ((lm.submissions / lm.views) * 100).toFixed(1)
                     : "0";
                 return (
-                  <tr key={lm.id} className="hover:bg-gray-50">
-                    <td className="whitespace-nowrap px-5 py-3 font-medium text-gray-900">
+                  <tr key={lm.id} className="hover:bg-bg">
+                    <td className="whitespace-nowrap px-5 py-3 font-medium text-text-primary">
                       {lm.name}
                     </td>
                     <td className="px-5 py-3">
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-text-tertiary">
                         coldemail.com{agencyProfile.resourcesUrl}/{lm.slug}
                       </span>
                     </td>
                     <td className="whitespace-nowrap px-5 py-3">
-                      <span
-                        className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
-                          lm.status === "live"
-                            ? "bg-green-50 text-green-700"
-                            : "bg-gray-100 text-gray-500"
-                        }`}
-                      >
+                      <Badge variant={lm.status === "live" ? "live" : "draft"}>
                         {lm.status === "live" ? "Live" : "Draft"}
-                      </span>
+                      </Badge>
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-right text-gray-600">
+                    <td className="whitespace-nowrap px-5 py-3 text-right text-text-secondary">
                       {lm.views.toLocaleString()}
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-right text-gray-600">
+                    <td className="whitespace-nowrap px-5 py-3 text-right text-text-secondary">
                       {lm.submissions.toLocaleString()}
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-right text-gray-600">
+                    <td className="whitespace-nowrap px-5 py-3 text-right text-text-secondary">
                       {rate}%
                     </td>
-                    <td className="whitespace-nowrap px-5 py-3 text-gray-400">
+                    <td className="whitespace-nowrap px-5 py-3 text-text-tertiary">
                       {new Date(lm.createdAt).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",

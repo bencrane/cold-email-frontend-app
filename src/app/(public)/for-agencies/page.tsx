@@ -106,7 +106,7 @@ function ProfileMockup() {
           <div>
             <div className="text-lg font-bold tracking-[-0.3px]">
               Your Agency{" "}
-              <span className="ml-2 inline-block rounded-full bg-green-50 px-2 py-0.5 text-[10px] font-semibold text-green-700">
+              <span className="ml-2 inline-block rounded-full bg-success-bg px-2 py-0.5 text-[10px] font-semibold text-success-text">
                 Verified
               </span>
             </div>
@@ -217,13 +217,13 @@ function AnalyticsMockup() {
               <div className="mt-0.5 text-[11px] text-text-tertiary">
                 {m.label}
               </div>
-              <div className="text-[11px] font-semibold text-green-600">
+              <div className="text-[11px] font-semibold text-success">
                 {m.delta}
               </div>
             </div>
           ))}
         </div>
-        <div className="relative h-[120px] overflow-hidden rounded-[var(--radius-sm)] bg-gradient-to-b from-blue-50 to-transparent">
+        <div className="relative h-[120px] overflow-hidden rounded-[var(--radius-sm)] bg-gradient-to-b from-accent-light to-transparent">
           <svg
             className="absolute bottom-5 left-0 right-0 h-20 w-full"
             viewBox="0 0 500 80"
@@ -232,7 +232,7 @@ function AnalyticsMockup() {
             <polyline
               points="0,64 40,48 80,52 120,32 160,36 200,24 240,28 280,16 320,20 360,12 400,16 440,8 480,10 500,6"
               fill="none"
-              stroke="#1A56DB"
+              stroke="var(--accent)"
               strokeWidth="2"
               vectorEffect="non-scaling-stroke"
             />
@@ -272,7 +272,7 @@ export default function ForAgenciesPage() {
           <div className="mb-20 flex flex-wrap gap-3">
             <a
               href="#pricing"
-              className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-text-primary px-7 py-3.5 text-[15px] font-semibold text-white no-underline transition-colors hover:bg-[#2A2D35]"
+              className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] bg-text-primary px-7 py-3.5 text-[15px] font-semibold text-white no-underline transition-colors hover:bg-text-primary-hover"
             >
               See Plans
             </a>
@@ -337,7 +337,7 @@ export default function ForAgenciesPage() {
                 </p>
                 {feature.details.map((detail) => (
                   <div key={detail} className="mb-3 flex items-start gap-3">
-                    <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50">
+                    <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-light">
                       {checkIcon}
                     </div>
                     <span className="text-sm leading-[1.5] text-text-secondary">
@@ -384,7 +384,7 @@ export default function ForAgenciesPage() {
                   key={f}
                   className="flex items-start gap-2.5 border-b border-tag-bg py-2 text-sm leading-[1.45] text-text-secondary last:border-0"
                 >
-                  <span className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-blue-50">
+                  <span className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-accent-light">
                     {checkIcon}
                   </span>
                   {f}
@@ -420,14 +420,14 @@ export default function ForAgenciesPage() {
                   key={f}
                   className="flex items-start gap-2.5 border-b border-tag-bg py-2 text-sm leading-[1.45] text-text-secondary last:border-0"
                 >
-                  <span className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-blue-50">
+                  <span className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-accent-light">
                     {checkIcon}
                   </span>
                   {f}
                 </li>
               ))}
             </ul>
-            <button className="w-full cursor-pointer rounded-[var(--radius-sm)] border-none bg-text-primary py-3.5 text-center text-sm font-semibold text-white transition-colors hover:bg-[#2A2D35]">
+            <button className="w-full cursor-pointer rounded-[var(--radius-sm)] border-none bg-text-primary py-3.5 text-center text-sm font-semibold text-white transition-colors hover:bg-text-primary-hover">
               Get Started
             </button>
           </div>
@@ -465,7 +465,7 @@ export default function ForAgenciesPage() {
           </p>
           <a
             href="#pricing"
-            className="relative z-10 inline-flex rounded-[var(--radius-sm)] bg-white px-8 py-3.5 text-sm font-semibold text-text-primary no-underline transition-colors hover:bg-[#F0F0F0]"
+            className="relative z-10 inline-flex rounded-[var(--radius-sm)] bg-white px-8 py-3.5 text-sm font-semibold text-text-primary no-underline transition-colors hover:bg-surface-hover"
           >
             Apply Now
           </a>

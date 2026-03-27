@@ -28,20 +28,20 @@ export default function LeadMagnetBuilder() {
   const slug = customSlug || slugify(pageTitle) || "your-page";
 
   const inputClass =
-    "w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500";
-  const labelClass = "mb-1.5 block text-sm font-medium text-gray-700";
+    "w-full rounded-lg border border-border px-3 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent";
+  const labelClass = "mb-1.5 block text-sm font-medium text-text-secondary";
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Create Lead Magnet</h1>
-        <p className="mt-1 text-sm text-gray-500">Build a gated landing page to capture leads.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-text-primary">Create Lead Magnet</h1>
+        <p className="mt-1 text-sm text-text-tertiary">Build a gated landing page to capture leads.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Editor */}
-        <div className="space-y-5 rounded-xl border border-gray-200 bg-white p-5">
-          <h2 className="text-base font-semibold text-gray-900">Page Settings</h2>
+        <div className="space-y-5 rounded-[var(--radius)] border border-border bg-surface p-5">
+          <h2 className="text-base font-semibold text-text-primary">Page Settings</h2>
 
           <div>
             <label className={labelClass}>Page Title</label>
@@ -73,8 +73,8 @@ export default function LeadMagnetBuilder() {
                   onClick={() => setContentType(type)}
                   className={`rounded-lg border px-4 py-2 text-sm font-medium transition ${
                     contentType === type
-                      ? "border-blue-600 bg-blue-50 text-blue-600"
-                      : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                      ? "border-accent bg-accent-light text-accent"
+                      : "border-border text-text-secondary hover:bg-bg"
                   }`}
                 >
                   {type === "pdf" ? "PDF Download" : type === "video" ? "Video / Loom" : "External Link"}
@@ -86,10 +86,10 @@ export default function LeadMagnetBuilder() {
           {contentType === "pdf" && (
             <div>
               <label className={labelClass}>Upload PDF</label>
-              <div className="flex items-center justify-center rounded-lg border-2 border-dashed border-gray-200 px-6 py-8">
+              <div className="flex items-center justify-center rounded-lg border-2 border-dashed border-border px-6 py-8">
                 <div className="text-center">
-                  <p className="text-sm text-gray-500">Drag and drop your PDF, or</p>
-                  <button className="mt-2 rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-blue-700">
+                  <p className="text-sm text-text-tertiary">Drag and drop your PDF, or</p>
+                  <button className="mt-2 rounded-lg bg-accent px-4 py-1.5 text-sm font-medium text-white hover:bg-accent-hover">
                     Browse Files
                   </button>
                 </div>
@@ -123,7 +123,7 @@ export default function LeadMagnetBuilder() {
 
           <div>
             <label className={labelClass}>Form Fields</label>
-            <p className="mb-2 text-xs text-gray-400">Email is always required.</p>
+            <p className="mb-2 text-xs text-text-tertiary">Email is always required.</p>
             <div className="space-y-2">
               {[
                 { label: "Name", checked: formName, onChange: setFormName },
@@ -135,9 +135,9 @@ export default function LeadMagnetBuilder() {
                     type="checkbox"
                     checked={field.checked}
                     onChange={(e) => field.onChange(e.target.checked)}
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="h-4 w-4 rounded border-border-hover text-accent focus:ring-accent"
                   />
-                  <span className="text-sm text-gray-700">{field.label}</span>
+                  <span className="text-sm text-text-secondary">{field.label}</span>
                 </label>
               ))}
             </div>
@@ -165,7 +165,7 @@ export default function LeadMagnetBuilder() {
           <div>
             <label className={labelClass}>Custom Slug</label>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-400">coldemail.com{agencyProfile.resourcesUrl}/</span>
+              <span className="text-xs text-text-tertiary">coldemail.com{agencyProfile.resourcesUrl}/</span>
               <input
                 className={inputClass}
                 value={customSlug}
@@ -176,10 +176,10 @@ export default function LeadMagnetBuilder() {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700">
+            <button className="rounded-lg bg-accent px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-hover">
               Publish Lead Magnet
             </button>
-            <button className="rounded-lg border border-gray-200 px-6 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
+            <button className="rounded-lg border border-border px-6 py-2.5 text-sm font-medium text-text-secondary transition hover:bg-bg">
               Save as Draft
             </button>
           </div>
@@ -187,27 +187,27 @@ export default function LeadMagnetBuilder() {
 
         {/* Live Preview */}
         <div className="space-y-3">
-          <h2 className="text-base font-semibold text-gray-900">Live Preview</h2>
-          <div className="rounded-xl border border-gray-200 bg-white overflow-hidden">
+          <h2 className="text-base font-semibold text-text-primary">Live Preview</h2>
+          <div className="rounded-[var(--radius)] border border-border bg-surface overflow-hidden">
             {/* Preview Header */}
-            <div className="border-b border-gray-100 px-6 py-3">
-              <span className="text-sm font-bold text-gray-900">
-                ColdEmail<span className="text-blue-600">.com</span>
+            <div className="border-b border-border-light px-6 py-3">
+              <span className="text-sm font-bold text-text-primary">
+                ColdEmail<span className="text-accent">.com</span>
               </span>
             </div>
 
             {/* Preview Content */}
             <div className="flex min-h-[500px] flex-col items-center justify-center px-8 py-12">
               <div className="w-full max-w-md text-center">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-text-primary">
                   {pageTitle || "Your Page Title"}
                 </h2>
-                <p className="mt-3 text-sm text-gray-600">
+                <p className="mt-3 text-sm text-text-secondary">
                   {description || "Your description will appear here."}
                 </p>
 
                 {contentType === "video" && videoUrl && (
-                  <div className="mt-6 aspect-video rounded-lg bg-gray-100" />
+                  <div className="mt-6 aspect-video rounded-lg bg-surface-muted" />
                 )}
 
                 {/* Form */}
@@ -215,34 +215,34 @@ export default function LeadMagnetBuilder() {
                   <div>
                     <input
                       disabled
-                      className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-400"
+                      className="w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm text-text-tertiary"
                       placeholder="Email address *"
                     />
                   </div>
                   {formName && (
                     <input
                       disabled
-                      className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-400"
+                      className="w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm text-text-tertiary"
                       placeholder="Full name"
                     />
                   )}
                   {formPhone && (
                     <input
                       disabled
-                      className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-400"
+                      className="w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm text-text-tertiary"
                       placeholder="Phone number"
                     />
                   )}
                   {formCompany && (
                     <input
                       disabled
-                      className="w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-400"
+                      className="w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm text-text-tertiary"
                       placeholder="Company name"
                     />
                   )}
                   <button
                     disabled
-                    className="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-semibold text-white"
+                    className="w-full rounded-lg bg-accent py-2.5 text-sm font-semibold text-white"
                   >
                     {buttonText || "Get Access"}
                   </button>
@@ -251,14 +251,14 @@ export default function LeadMagnetBuilder() {
             </div>
 
             {/* Preview Footer */}
-            <div className="border-t border-gray-100 px-6 py-3 text-center">
-              <p className="text-xs text-gray-400">
+            <div className="border-t border-border-light px-6 py-3 text-center">
+              <p className="text-xs text-text-tertiary">
                 Hosted on{" "}
-                <span className="font-medium text-gray-500">ColdEmail.com</span>
+                <span className="font-medium text-text-tertiary">ColdEmail.com</span>
               </p>
             </div>
           </div>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-text-tertiary">
             coldemail.com{agencyProfile.resourcesUrl}/{slug}
           </p>
         </div>

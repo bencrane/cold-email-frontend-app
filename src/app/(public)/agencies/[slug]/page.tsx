@@ -4,6 +4,9 @@ import { agencies, getAgencyBySlug } from "@/data/agencies";
 import { getToolBySlug } from "@/data/tools";
 import { getApprovedReviews } from "@/data/reviews";
 import { createMetadata } from "@/lib/seo";
+import Breadcrumb from "@/components/ui/breadcrumb";
+import Badge from "@/components/ui/badge";
+import Avatar from "@/components/ui/avatar";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -43,13 +46,13 @@ export default async function AgencyPage({
   return (
     <main className="mx-auto max-w-[var(--max-width)] px-6 pb-20 pt-12">
       {/* Breadcrumb */}
-      <div className="mb-8 flex items-center gap-2 text-sm text-text-tertiary">
-        <Link href="/agencies" className="text-text-tertiary no-underline hover:text-text-secondary">
-          Agencies
-        </Link>
-        <span>/</span>
-        <span className="text-text-primary">{agency.name}</span>
-      </div>
+      <Breadcrumb
+        className="mb-8"
+        items={[
+          { label: "Agencies", href: "/agencies" },
+          { label: agency.name },
+        ]}
+      />
 
       {/* Header */}
       <div className="mb-10 flex items-start gap-5">
@@ -63,9 +66,9 @@ export default async function AgencyPage({
           <h1 className="mb-1 text-3xl font-bold tracking-[-0.5px] text-text-primary">
             {agency.name}
             {agency.verified && (
-              <span className="ml-3 inline-block rounded-full bg-green-50 px-2.5 py-0.5 align-middle text-xs font-semibold text-green-700">
+              <Badge variant="verified" className="ml-3 align-middle">
                 Verified
-              </span>
+              </Badge>
             )}
           </h1>
           <p className="text-base text-text-secondary">{agency.tagline}</p>
@@ -169,7 +172,7 @@ export default async function AgencyPage({
                 {approvedReviews.map((r) => (
                   <div key={r.id} className="rounded-[var(--radius)] border border-border bg-surface p-6">
                     {r.rating && (
-                      <div className="mb-2 text-sm text-yellow-500">
+                      <div className="mb-2 text-sm text-star-hover">
                         {"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}
                       </div>
                     )}
@@ -204,7 +207,7 @@ export default async function AgencyPage({
                 href={agency.bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full rounded-[var(--radius-sm)] bg-text-primary py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors hover:bg-[#2A2D35]"
+                className="block w-full rounded-[var(--radius-sm)] bg-text-primary py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors hover:bg-text-primary-hover"
               >
                 Book Discovery Call →
               </a>
@@ -249,15 +252,14 @@ export default async function AgencyPage({
               <div className="space-y-3">
                 {agency.team.map((member) => (
                   <div key={member.name} className="flex items-center gap-3">
-                    <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
-                      style={{ background: agency.color }}
-                    >
-                      {member.name
+                    <Avatar
+                      initials={member.name
                         .split(" ")
                         .map((n) => n[0])
                         .join("")}
-                    </div>
+                      color={agency.color}
+                      size="sm"
+                    />
                     <div>
                       <div className="text-sm font-medium text-text-primary">
                         {member.name}
