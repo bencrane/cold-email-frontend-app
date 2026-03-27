@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { agencyProfile } from "@/data/dashboard";
+import { getPendingReviews } from "@/data/reviews";
 
 type SectionKey = "info" | "team" | "services" | "caseStudies" | "testimonials" | "techStack" | "videos";
 
@@ -16,6 +17,9 @@ export default function ProfileEditor() {
     videos: false,
   });
   const [showPreview, setShowPreview] = useState(false);
+  const [testimonialTab, setTestimonialTab] = useState<"existing" | "pending">("existing");
+  const pendingReviews = getPendingReviews(agencyProfile.slug);
+  const [reviewStatuses, setReviewStatuses] = useState<Record<string, "approved" | "rejected">>({});
 
   function toggle(key: SectionKey) {
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -235,21 +239,130 @@ export default function ProfileEditor() {
         <div className="px-5">
           {sectionHeader("testimonials", "Testimonials")}
           {openSections.testimonials && (
-            <div className="space-y-3 pb-5">
-              {agencyProfile.testimonials.map((t, i) => (
-                <div key={i} className="rounded-lg border border-gray-100 p-3 space-y-2">
-                  <textarea className={textareaClass} rows={3} defaultValue={t.quote} placeholder="Testimonial quote" />
-                  <div className="grid grid-cols-3 gap-3">
-                    <input className={inputClass} defaultValue={t.name} placeholder="Name" />
-                    <input className={inputClass} defaultValue={t.title} placeholder="Title" />
-                    <input className={inputClass} defaultValue={t.company} placeholder="Company" />
-                  </div>
-                  <button className="text-sm text-red-500 hover:text-red-700">Remove</button>
+            <div className="pb-5">
+              {/* Tabs */}
+              <div className="mb-4 flex gap-1 rounded-lg bg-gray-100 p-1">
+                <button
+                  type="button"
+                  onClick={() => setTestimonialTab("existing")}
+                  className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition ${
+                    testimonialTab === "existing"
+                      ? "bg-white text-gray-900 shadow-sm"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
+                >
+                  Testimonials
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTestimonialTab("pending")}
+                  className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition ${
+                    testimonialTab === "pending"
+                      ? "bg-white text-gray-900 shadow-sm"
+                      : "text-gray-500 hover:text-gray-700"
+                  }`}
+                >
+                  Pending Reviews
+                  {pendingReviews.filter((r) => !reviewStatuses[r.id]).length > 0 && (
+                    <span className="ml-1.5 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-blue-100 px-1.5 text-xs font-semibold text-blue-600">
+                      {pendingReviews.filter((r) => !reviewStatuses[r.id]).length}
+                    </span>
+                  )}
+                </button>
+              </div>
+
+              {testimonialTab === "existing" ? (
+                <div className="space-y-3">
+                  {agencyProfile.testimonials.map((t, i) => (
+                    <div key={i} className="rounded-lg border border-gray-100 p-3 space-y-2">
+                      <textarea className={textareaClass} rows={3} defaultValue={t.quote} placeholder="Testimonial quote" />
+                      <div className="grid grid-cols-3 gap-3">
+                        <input className={inputClass} defaultValue={t.name} placeholder="Name" />
+                        <input className={inputClass} defaultValue={t.title} placeholder="Title" />
+                        <input className={inputClass} defaultValue={t.company} placeholder="Company" />
+                      </div>
+                      <button className="text-sm text-red-500 hover:text-red-700">Remove</button>
+                    </div>
+                  ))}
+                  <button className="rounded-lg border border-dashed border-gray-300 px-4 py-2 text-sm font-medium text-gray-500 hover:border-blue-400 hover:text-blue-600">
+                    + Add Testimonial
+                  </button>
                 </div>
-              ))}
-              <button className="rounded-lg border border-dashed border-gray-300 px-4 py-2 text-sm font-medium text-gray-500 hover:border-blue-400 hover:text-blue-600">
-                + Add Testimonial
-              </button>
+              ) : (
+                <div className="space-y-3">
+                  {pendingReviews.length === 0 ? (
+                    <p className="py-6 text-center text-sm text-gray-400">No pending reviews.</p>
+                  ) : (
+                    pendingReviews.map((review) => {
+                      const action = reviewStatuses[review.id];
+                      return (
+                        <div
+                          key={review.id}
+                          className={`rounded-lg border p-4 space-y-3 ${
+                            action === "approved"
+                              ? "border-green-200 bg-green-50"
+                              : action === "rejected"
+                                ? "border-red-200 bg-red-50 opacity-60"
+                                : "border-gray-100"
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1">
+                              <p className="text-sm italic leading-relaxed text-gray-700">
+                                &ldquo;{review.text}&rdquo;
+                              </p>
+                              <div className="mt-2 flex items-center gap-3">
+                                <span className="text-sm font-medium text-gray-900">{review.name}</span>
+                                <span className="text-xs text-gray-500">
+                                  {review.jobTitle}, {review.company}
+                                </span>
+                                {review.rating && (
+                                  <span className="text-xs text-yellow-500">
+                                    {"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}
+                                  </span>
+                                )}
+                              </div>
+                              <p className="mt-1 text-xs text-gray-400">
+                                Submitted {new Date(review.submittedAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                          </div>
+                          {action ? (
+                            <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                              action === "approved" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                            }`}>
+                              {action === "approved" ? "Approved" : "Rejected"}
+                            </span>
+                          ) : (
+                            <div className="flex gap-2">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  console.log("Approved review:", review.id);
+                                  setReviewStatuses((prev) => ({ ...prev, [review.id]: "approved" }));
+                                }}
+                                className="rounded-lg bg-green-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-green-700"
+                              >
+                                Approve
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  console.log("Rejected review:", review.id);
+                                  setReviewStatuses((prev) => ({ ...prev, [review.id]: "rejected" }));
+                                }}
+                                className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50"
+                              >
+                                Reject
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>

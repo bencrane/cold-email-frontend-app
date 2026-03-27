@@ -7,6 +7,7 @@ const navLinks = [
   { label: "Tools", href: "/tools" },
   { label: "Agencies", href: "/agencies" },
   { label: "Playbooks", href: "/playbooks" },
+  { label: "Agency Admin", href: "/dashboard" },
 ];
 
 export default function Nav() {
