@@ -44,7 +44,7 @@ export default function LeadMagnetsPage() {
                     </td>
                     <td className="px-5 py-3">
                       <span className="text-xs text-gray-400">
-                        {agencyProfile.resourcesUrl}/{lm.slug}
+                        coldemail.com{agencyProfile.resourcesUrl}/{lm.slug}
                       </span>
                     </td>
                     <td className="whitespace-nowrap px-5 py-3">

@@ -114,8 +114,8 @@ export default function SettingsPage() {
               <p className="text-gray-900">coldemail.com{agencyProfile.publicUrl}</p>
             </div>
             <div>
-              <p className="text-xs font-medium text-gray-500">Resources Subdomain</p>
-              <p className="text-gray-900">{agencyProfile.resourcesUrl}</p>
+              <p className="text-xs font-medium text-gray-500">Resources</p>
+              <p className="text-gray-900">coldemail.com{agencyProfile.resourcesUrl}</p>
             </div>
           </div>
         </div>
