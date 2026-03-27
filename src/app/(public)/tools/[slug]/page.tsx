@@ -6,6 +6,7 @@ import { categories } from "@/data/categories";
 import { createMetadata } from "@/lib/seo";
 import Breadcrumb from "@/components/ui/breadcrumb";
 import type { Metadata } from "next";
+import ToolReviewsSection from "./tool-reviews-section";
 
 export function generateStaticParams() {
   return tools.map((tool) => ({ slug: tool.slug }));
@@ -179,6 +180,9 @@ export default async function ToolPage({
               </div>
             </section>
           )}
+
+          {/* Reviews */}
+          <ToolReviewsSection tool={tool} />
         </div>
 
         {/* Sidebar */}

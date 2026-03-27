@@ -39,6 +39,7 @@ export const tools: Tool[] = [
       { title: "SDR Team Prospecting", description: "Equip SDRs with warmed inboxes and automated follow-up sequences." },
     ],
     features: ["Email warmup", "Inbox rotation", "Campaign analytics", "A/B testing", "Unified inbox", "Lead database", "API access"],
+    g2: { rating: 4.8, reviewCount: 342, url: "https://www.g2.com/products/instantly-ai/reviews" },
   },
   {
     slug: "smartlead",
@@ -77,6 +78,7 @@ export const tools: Tool[] = [
       { title: "Custom Workflow Builders", description: "Use the API to integrate cold email into custom sales stacks." },
     ],
     features: ["Email warmup", "Master inbox", "Mailbox rotation", "API access", "White-label", "Webhooks", "Sub-accounts"],
+    g2: { rating: 4.6, reviewCount: 189, url: "https://www.g2.com/products/smartlead/reviews" },
   },
   {
     slug: "clay",
@@ -115,6 +117,7 @@ export const tools: Tool[] = [
       { title: "Hyper-Personalized Campaigns", description: "Use AI to generate custom first lines based on enriched prospect data." },
     ],
     features: ["100+ data providers", "AI enrichment", "Workflow builder", "CRM sync", "Email finder", "Waterfall enrichment", "API"],
+    g2: { rating: 4.9, reviewCount: 276, url: "https://www.g2.com/products/clay/reviews" },
   },
   {
     slug: "apollo",
@@ -153,6 +156,7 @@ export const tools: Tool[] = [
       { title: "Market Research", description: "Use filters and intent signals to map your total addressable market." },
     ],
     features: ["B2B database", "Email sequencing", "Chrome extension", "Intent data", "Dialer", "CRM", "API"],
+    g2: { rating: 4.7, reviewCount: 1280, url: "https://www.g2.com/products/apollo-io/reviews" },
   },
   {
     slug: "lemlist",
@@ -191,6 +195,7 @@ export const tools: Tool[] = [
       { title: "Personalized Outbound", description: "Use custom images and variables to stand out in crowded inboxes." },
     ],
     features: ["Email sequences", "LinkedIn steps", "Custom images", "A/B testing", "CRM sync", "Email warmup", "Lead database"],
+    g2: { rating: 4.5, reviewCount: 245, url: "https://www.g2.com/products/lemlist/reviews" },
   },
   {
     slug: "leadmagic",
@@ -227,6 +232,7 @@ export const tools: Tool[] = [
       { title: "ABM Validation", description: "Confirm whether target accounts are engaging with your content before outreach." },
     ],
     features: ["Website visitor ID", "Company enrichment", "Contact enrichment", "Real-time alerts", "CRM sync", "API", "Slack notifications"],
+    g2: { rating: 4.8, reviewCount: 58, url: "https://www.g2.com/products/leadmagic/reviews" },
   },
 ];
 
