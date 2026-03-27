@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { agencies, getAgencyBySlug } from "@/data/agencies";
 import { getToolBySlug } from "@/data/tools";
+import { getApprovedReviews } from "@/data/reviews";
 import { createMetadata } from "@/lib/seo";
 import type { Metadata } from "next";
 
@@ -36,6 +37,8 @@ export default async function AgencyPage({
   const stackTools = agency.techStack
     .map((s) => getToolBySlug(s))
     .filter(Boolean);
+
+  const approvedReviews = getApprovedReviews(slug);
 
   return (
     <main className="mx-auto max-w-[var(--max-width)] px-6 pb-20 pt-12">
@@ -144,7 +147,7 @@ export default async function AgencyPage({
           )}
 
           {/* Testimonials */}
-          {agency.testimonials.length > 0 && (
+          {(agency.testimonials.length > 0 || approvedReviews.length > 0) && (
             <section>
               <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">Testimonials</h2>
               <div className="space-y-4">
@@ -159,6 +162,26 @@ export default async function AgencyPage({
                       </div>
                       <div className="text-xs text-text-tertiary">
                         {t.title}, {t.company}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {approvedReviews.map((r) => (
+                  <div key={r.id} className="rounded-[var(--radius)] border border-border bg-surface p-6">
+                    {r.rating && (
+                      <div className="mb-2 text-sm text-yellow-500">
+                        {"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}
+                      </div>
+                    )}
+                    <p className="mb-4 font-display text-lg italic leading-[1.5] text-text-primary">
+                      &ldquo;{r.text}&rdquo;
+                    </p>
+                    <div>
+                      <div className="text-sm font-semibold text-text-primary">
+                        {r.name}
+                      </div>
+                      <div className="text-xs text-text-tertiary">
+                        {r.jobTitle}, {r.company}
                       </div>
                     </div>
                   </div>
