@@ -110,3 +110,46 @@ export interface ToolCategory {
   description: string;
   tools: string[];
 }
+
+export type LinkedInPostTopic =
+  | "Deliverability"
+  | "Clay & Enrichment"
+  | "Copywriting"
+  | "Infrastructure"
+  | "Automation"
+  | "Scaling"
+  | "Tools"
+  | "Agency Ops";
+
+export const LINKEDIN_TOPICS: LinkedInPostTopic[] = [
+  "Deliverability",
+  "Clay & Enrichment",
+  "Copywriting",
+  "Infrastructure",
+  "Automation",
+  "Scaling",
+  "Tools",
+  "Agency Ops",
+];
+
+export interface LinkedInCreator {
+  slug: string;
+  name: string;
+  initials: string;
+  headline: string;
+  linkedinUrl: string;
+  avatarUrl?: string;
+  active: boolean;
+}
+
+export interface LinkedInPost {
+  id: string;
+  creatorSlug: string;
+  linkedinPostUrl: string;
+  content: string;
+  likes: number;
+  comments: number;
+  topic: LinkedInPostTopic;
+  postedAt: string;
+  fetchedAt: string;
+}

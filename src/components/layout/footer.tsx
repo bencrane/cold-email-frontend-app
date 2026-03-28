@@ -4,6 +4,7 @@ const footerLinks = [
   { label: "Tools", href: "/tools" },
   { label: "Agencies", href: "/agencies" },
   { label: "Playbooks", href: "/playbooks" },
+  { label: "Feed", href: "/feed" },
   { label: "List Your Agency", href: "/for-agencies" },
 ];
 

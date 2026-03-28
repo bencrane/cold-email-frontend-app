@@ -7,6 +7,7 @@ const navLinks = [
   { label: "Tools", href: "/tools" },
   { label: "Agencies", href: "/agencies" },
   { label: "Playbooks", href: "/playbooks" },
+  { label: "Feed", href: "/feed" },
   { label: "Agency Admin", href: "/dashboard" },
 ];
 
