@@ -111,6 +111,26 @@ export interface ToolCategory {
   tools: string[];
 }
 
+export interface LeadMagnet {
+  id: string;
+  agencySlug: string;
+  slug: string;
+  title: string;
+  description: string;
+  contentType: "pdf_upload" | "pdf_generated" | "video" | "external_link";
+  contentUrl: string;
+  formFields: {
+    name: boolean;
+    phone: boolean;
+    company: boolean;
+  };
+  buttonText: string;
+  thankYouMessage: string;
+  status: "draft" | "live";
+  noindex: boolean;
+  createdAt: string;
+}
+
 export type LinkedInPostTopic =
   | "Deliverability"
   | "Clay & Enrichment"

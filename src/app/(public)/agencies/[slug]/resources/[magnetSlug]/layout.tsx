@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
-import { agencyProfile, leadMagnets } from "@/data/dashboard";
+import { allLeadMagnets } from "@/data/lead-magnets";
 import { agencies } from "@/data/agencies";
 
 const SITE_URL = "https://coldemail.com";
 
 export function generateStaticParams() {
-  const params: { slug: string; magnetSlug: string }[] = [];
-  for (const agency of agencies) {
-    for (const lm of leadMagnets) {
-      params.push({ slug: agency.slug, magnetSlug: lm.slug });
-    }
-  }
-  // Also include the dashboard agency profile slug
-  if (!agencies.some((a) => a.slug === agencyProfile.slug)) {
-    for (const lm of leadMagnets) {
-      params.push({ slug: agencyProfile.slug, magnetSlug: lm.slug });
-    }
-  }
-  return params;
+  return allLeadMagnets
+    .filter((lm) => lm.status === "live")
+    .map((lm) => ({
+      slug: lm.agencySlug,
+      magnetSlug: lm.slug,
+    }));
 }
 
 export async function generateMetadata({
@@ -26,23 +19,26 @@ export async function generateMetadata({
   params: Promise<{ slug: string; magnetSlug: string }>;
 }): Promise<Metadata> {
   const { slug, magnetSlug } = await params;
-  const magnet = leadMagnets.find((lm) => lm.slug === magnetSlug);
+  const magnet = allLeadMagnets.find(
+    (lm) => lm.agencySlug === slug && lm.slug === magnetSlug
+  );
 
   if (!magnet) {
     return { title: "Not Found — ColdEmail.com" };
   }
 
   const canonicalUrl = `${SITE_URL}/agencies/${slug}/resources/${magnetSlug}`;
-  const agencyName = agencies.find((a) => a.slug === slug)?.name ?? agencyProfile.name;
+  const agencyName =
+    agencies.find((a) => a.slug === slug)?.name ?? slug;
 
   return {
-    title: `${magnet.pageTitle} — ${agencyName} | ColdEmail.com`,
+    title: `${magnet.title} — ${agencyName} | ColdEmail.com`,
     description: magnet.description,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
-      title: magnet.pageTitle,
+      title: magnet.title,
       description: magnet.description,
       url: canonicalUrl,
       siteName: "ColdEmail.com",
@@ -50,10 +46,10 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: magnet.pageTitle,
+      title: magnet.title,
       description: magnet.description,
     },
-    ...(magnet.noIndex && {
+    ...(magnet.noindex && {
       robots: {
         index: false,
         follow: false,
