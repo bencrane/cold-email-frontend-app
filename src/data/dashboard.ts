@@ -81,6 +81,10 @@ export const agencyProfile = {
   videos: ["https://youtube.com/watch?v=example1", "https://youtube.com/watch?v=example2"],
 };
 
+export function addLeadMagnet(magnet: DashboardLeadMagnet) {
+  leadMagnets.push(magnet);
+}
+
 export const leadMagnets: DashboardLeadMagnet[] = [
   {
     id: "lm-1",
