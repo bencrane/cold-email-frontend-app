@@ -1,23 +1,12 @@
 // Demo data for GrowthEngineX agency dashboard
 
-export type LeadMagnet = {
-  id: string;
+import type { LeadMagnet } from "@/lib/types";
+
+export type DashboardLeadMagnet = LeadMagnet & {
+  /** Display name shown in the dashboard list (may differ from public title) */
   name: string;
-  slug: string;
-  status: "live" | "draft";
-  contentType: "pdf" | "video" | "link";
-  pageTitle: string;
-  description: string;
-  fileUrl?: string;
-  videoUrl?: string;
-  linkUrl?: string;
-  formFields: { name: boolean; phone: boolean; company: boolean };
-  buttonText: string;
-  thankYouMessage: string;
-  noIndex: boolean;
   views: number;
   submissions: number;
-  createdAt: string;
 };
 
 export type Lead = {
@@ -92,54 +81,57 @@ export const agencyProfile = {
   videos: ["https://youtube.com/watch?v=example1", "https://youtube.com/watch?v=example2"],
 };
 
-export const leadMagnets: LeadMagnet[] = [
+export const leadMagnets: DashboardLeadMagnet[] = [
   {
     id: "lm-1",
+    agencySlug: "growthengine",
     name: "The Cold Email Deliverability Checklist",
     slug: "deliverability-checklist",
     status: "live",
-    contentType: "pdf",
-    pageTitle: "The Ultimate Cold Email Deliverability Checklist",
+    contentType: "pdf_upload",
+    title: "The Ultimate Cold Email Deliverability Checklist",
     description: "42-point checklist to ensure your cold emails land in the primary inbox every time. Covers DNS setup, warming protocols, content optimization, and monitoring.",
-    fileUrl: "/files/deliverability-checklist.pdf",
+    contentUrl: "/files/deliverability-checklist.pdf",
     formFields: { name: true, phone: false, company: true },
     buttonText: "Download the Checklist",
     thankYouMessage: "Your checklist is ready! Click the button below to download.",
-    noIndex: false,
+    noindex: false,
     views: 1847,
     submissions: 312,
     createdAt: "2026-02-15",
   },
   {
     id: "lm-2",
+    agencySlug: "growthengine",
     name: "8M Subject Line Swipe File",
     slug: "subject-line-swipe-file",
     status: "live",
-    contentType: "pdf",
-    pageTitle: "8 Million Emails Analyzed: The Subject Line Swipe File",
+    contentType: "pdf_generated",
+    title: "8 Million Emails Analyzed: The Subject Line Swipe File",
     description: "We analyzed 8 million cold emails to find the subject lines that actually get opened. Get our top 50 performing templates with fill-in-the-blank formulas.",
-    fileUrl: "/files/subject-line-swipe-file.pdf",
+    contentUrl: "/files/subject-line-swipe-file.pdf",
     formFields: { name: true, phone: false, company: false },
     buttonText: "Get the Swipe File",
     thankYouMessage: "Here's your swipe file! Start using these subject lines today.",
-    noIndex: false,
+    noindex: false,
     views: 3214,
     submissions: 589,
     createdAt: "2026-01-22",
   },
   {
     id: "lm-3",
+    agencySlug: "growthengine",
     name: "Signal-Based Prospecting Masterclass",
     slug: "signal-prospecting-masterclass",
     status: "live",
     contentType: "video",
-    pageTitle: "Signal-Based Prospecting Masterclass",
+    title: "Signal-Based Prospecting Masterclass",
     description: "45-minute deep dive into how we use intent signals, job changes, funding events, and tech installs to find prospects who are ready to buy right now.",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    contentUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     formFields: { name: true, phone: true, company: true },
     buttonText: "Watch the Masterclass",
     thankYouMessage: "Enjoy the masterclass! The video is ready to play below.",
-    noIndex: false,
+    noindex: false,
     views: 956,
     submissions: 178,
     createdAt: "2026-03-05",
