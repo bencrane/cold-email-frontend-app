@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { agencyProfile } from "@/data/dashboard";
+import type { LeadMagnet } from "@/lib/types";
 
 function slugify(text: string) {
   return text
@@ -10,26 +12,62 @@ function slugify(text: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-type ContentType = "pdf" | "video" | "link";
+type ContentType = LeadMagnet["contentType"];
+
+const contentTypeOptions: { value: ContentType; label: string }[] = [
+  { value: "pdf_upload", label: "PDF Download" },
+  { value: "video", label: "Video / Loom" },
+  { value: "external_link", label: "External Link" },
+];
 
 export default function LeadMagnetBuilder() {
+  const router = useRouter();
   const [pageTitle, setPageTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [contentType, setContentType] = useState<ContentType>("pdf");
-  const [videoUrl, setVideoUrl] = useState("");
-  const [linkUrl, setLinkUrl] = useState("");
+  const [contentType, setContentType] = useState<ContentType>("pdf_upload");
+  const [contentUrl, setContentUrl] = useState("");
   const [formName, setFormName] = useState(false);
   const [formPhone, setFormPhone] = useState(false);
   const [formCompany, setFormCompany] = useState(false);
   const [buttonText, setButtonText] = useState("Get Access");
   const [thankYouMessage, setThankYouMessage] = useState("Thanks! Your content is ready.");
   const [customSlug, setCustomSlug] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const slug = customSlug || slugify(pageTitle) || "your-page";
 
   const inputClass =
     "w-full rounded-lg border border-border px-3 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent";
   const labelClass = "mb-1.5 block text-sm font-medium text-text-secondary";
+
+  async function handleSave(status: "live" | "draft") {
+    if (!pageTitle || submitting) return;
+    setSubmitting(true);
+
+    try {
+      const res = await fetch("/api/lead-magnets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: pageTitle,
+          description,
+          contentType,
+          contentUrl,
+          formFields: { name: formName, phone: formPhone, company: formCompany },
+          buttonText,
+          thankYouMessage,
+          slug,
+          status,
+        }),
+      });
+
+      if (res.ok) {
+        router.push("/dashboard/lead-magnets");
+      }
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -67,29 +105,33 @@ export default function LeadMagnetBuilder() {
           <div>
             <label className={labelClass}>Content Type</label>
             <div className="flex gap-2">
-              {(["pdf", "video", "link"] as ContentType[]).map((type) => (
+              {contentTypeOptions.map((opt) => (
                 <button
-                  key={type}
-                  onClick={() => setContentType(type)}
+                  key={opt.value}
+                  type="button"
+                  onClick={() => setContentType(opt.value)}
                   className={`rounded-lg border px-4 py-2 text-sm font-medium transition ${
-                    contentType === type
+                    contentType === opt.value
                       ? "border-accent bg-accent-light text-accent"
                       : "border-border text-text-secondary hover:bg-bg"
                   }`}
                 >
-                  {type === "pdf" ? "PDF Download" : type === "video" ? "Video / Loom" : "External Link"}
+                  {opt.label}
                 </button>
               ))}
             </div>
           </div>
 
-          {contentType === "pdf" && (
+          {contentType === "pdf_upload" && (
             <div>
               <label className={labelClass}>Upload PDF</label>
               <div className="flex items-center justify-center rounded-lg border-2 border-dashed border-border px-6 py-8">
                 <div className="text-center">
                   <p className="text-sm text-text-tertiary">Drag and drop your PDF, or</p>
-                  <button className="mt-2 rounded-lg bg-accent px-4 py-1.5 text-sm font-medium text-white hover:bg-accent-hover">
+                  <button
+                    type="button"
+                    className="mt-2 rounded-lg bg-accent px-4 py-1.5 text-sm font-medium text-white hover:bg-accent-hover"
+                  >
                     Browse Files
                   </button>
                 </div>
@@ -102,21 +144,21 @@ export default function LeadMagnetBuilder() {
               <label className={labelClass}>Video URL</label>
               <input
                 className={inputClass}
-                value={videoUrl}
-                onChange={(e) => setVideoUrl(e.target.value)}
+                value={contentUrl}
+                onChange={(e) => setContentUrl(e.target.value)}
                 placeholder="https://youtube.com/watch?v=... or Loom URL"
               />
             </div>
           )}
 
-          {contentType === "link" && (
+          {contentType === "external_link" && (
             <div>
               <label className={labelClass}>External Link</label>
               <input
                 className={inputClass}
-                value={linkUrl}
-                onChange={(e) => setLinkUrl(e.target.value)}
-                placeholder="https://..."
+                value={contentUrl}
+                onChange={(e) => setContentUrl(e.target.value)}
+                placeholder="https://notion.so/..., Google Doc, Loom, etc."
               />
             </div>
           )}
@@ -176,10 +218,20 @@ export default function LeadMagnetBuilder() {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button className="rounded-lg bg-accent px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-hover">
-              Publish Lead Magnet
+            <button
+              type="button"
+              disabled={!pageTitle || submitting}
+              onClick={() => handleSave("live")}
+              className="rounded-lg bg-accent px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-accent-hover disabled:opacity-60"
+            >
+              {submitting ? "Saving..." : "Publish Lead Magnet"}
             </button>
-            <button className="rounded-lg border border-border px-6 py-2.5 text-sm font-medium text-text-secondary transition hover:bg-bg">
+            <button
+              type="button"
+              disabled={!pageTitle || submitting}
+              onClick={() => handleSave("draft")}
+              className="rounded-lg border border-border px-6 py-2.5 text-sm font-medium text-text-secondary transition hover:bg-bg disabled:opacity-60"
+            >
               Save as Draft
             </button>
           </div>
@@ -206,7 +258,7 @@ export default function LeadMagnetBuilder() {
                   {description || "Your description will appear here."}
                 </p>
 
-                {contentType === "video" && videoUrl && (
+                {contentType === "video" && contentUrl && (
                   <div className="mt-6 aspect-video rounded-lg bg-surface-muted" />
                 )}
 
