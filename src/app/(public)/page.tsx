@@ -3,6 +3,7 @@ import { tools } from "@/data/tools";
 import { agencies } from "@/data/agencies";
 import Badge from "@/components/ui/badge";
 import CourseSignup from "@/components/ui/course-signup";
+import LinkedInFeedScroll from "@/components/linkedin/LinkedInFeedScroll";
 
 const heroStats = [
   { value: "120+", label: "Tools reviewed" },
@@ -81,6 +82,9 @@ export default function HomePage() {
           ))}
         </div>
       </div>
+
+      {/* LinkedIn Feed */}
+      <LinkedInFeedScroll />
 
       {/* Top Tools */}
       <section className="mx-auto max-w-[var(--max-width)] px-6 pb-20">
