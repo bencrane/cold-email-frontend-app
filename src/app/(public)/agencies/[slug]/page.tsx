@@ -290,18 +290,10 @@ export default async function AgencyPage({
 
       {/* ── 4. LINKEDIN POSTS ── */}
       <section className="mb-12">
-        <div className="mb-4 flex items-baseline justify-between">
+        <div className="mb-4">
           <h2 className="text-xl font-semibold tracking-[-0.3px]">
             Recent posts
           </h2>
-          <a
-            href={agency.linkedinUrl || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-accent no-underline hover:underline"
-          >
-            View on LinkedIn →
-          </a>
         </div>
         <div className="scrollbar-hide flex gap-4 overflow-x-auto">
           {dummyPosts.map((post) => (

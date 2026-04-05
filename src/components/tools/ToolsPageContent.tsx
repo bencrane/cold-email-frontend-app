@@ -73,10 +73,7 @@ export default function ToolsPageContent() {
                   key={cat}
                   className="rounded-full bg-tag-bg px-2.5 py-[3px] text-xs font-medium text-tag-text"
                 >
-                  {cat
-                    .split("-")
-                    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-                    .join(" ")}
+                  {categories.find((c) => c.slug === cat)?.name ?? cat}
                 </span>
               ))}
             </div>
