@@ -10,7 +10,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="mx-auto flex w-full max-w-[var(--max-width)] items-center justify-between border-t border-border px-6 py-10">
+    <footer className="mx-auto flex h-[60px] w-full max-w-[var(--max-width)] items-center justify-between border-t border-border px-6">
       <div className="text-sm font-semibold text-text-primary">
         ColdEmail.com
         <span className="ml-3 text-[13px] font-normal text-text-tertiary">
