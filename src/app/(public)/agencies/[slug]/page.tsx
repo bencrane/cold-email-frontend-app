@@ -107,94 +107,126 @@ export default async function AgencyPage({
     <main className="mx-auto max-w-[var(--max-width)] px-6 pb-20 pt-12">
       {/* ── 1. HEADER + ABOUT + INDUSTRY PILLS ── */}
       <div className="mb-12">
-        <div className="flex items-start gap-5">
-          <div
-            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-2xl font-bold text-white"
-            style={{ background: agency.color }}
-          >
-            {agency.logo}
-          </div>
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+          {/* Left: agency info */}
           <div className="min-w-0 flex-1">
-            <h1 className="mb-1 text-3xl font-bold tracking-[-0.5px] text-text-primary">
-              {agency.name}
-              {agency.verified && (
-                <Badge variant="verified" className="ml-3 align-middle">
-                  Verified
-                </Badge>
-              )}
-            </h1>
-            <p className="mb-4 text-base text-text-secondary">
-              {agency.tagline}
-            </p>
-
-            {/* Stats row */}
-            <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-              {agency.stats.map((stat) => (
-                <div key={stat.label} className="flex items-baseline gap-1.5">
-                  <span className="text-lg font-bold tracking-[-0.3px] text-text-primary">
-                    {stat.value}
-                  </span>
-                  <span className="text-xs uppercase tracking-[0.5px] text-text-tertiary">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Social links */}
-            <div className="flex items-center gap-3">
-              {agency.websiteUrl && (
-                <a
-                  href={agency.websiteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs text-text-tertiary no-underline transition-colors hover:text-text-secondary"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M2 12h20" />
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg>
-                  Website
-                </a>
-              )}
-              {agency.linkedinUrl && (
-                <a
-                  href={agency.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs text-text-tertiary no-underline transition-colors hover:text-text-secondary"
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                  LinkedIn
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* About */}
-        <div className="mt-6">
-          <p className="text-[15px] leading-[1.7] text-text-secondary">
-            {agency.description}
-          </p>
-        </div>
-
-        {/* Industry pills */}
-        {agency.industries && agency.industries.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {agency.industries.map((industry) => (
-              <span
-                key={industry}
-                className="rounded-full bg-tag-bg px-3 py-1 text-xs font-medium text-tag-text"
+            <div className="flex items-start gap-5">
+              <div
+                className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-2xl font-bold text-white"
+                style={{ background: agency.color }}
               >
-                {industry}
-              </span>
-            ))}
+                {agency.logo}
+              </div>
+              <div className="min-w-0 flex-1">
+                <h1 className="mb-1 text-3xl font-bold tracking-[-0.5px] text-text-primary">
+                  {agency.name}
+                  {agency.verified && (
+                    <Badge variant="verified" className="ml-3 align-middle">
+                      Verified
+                    </Badge>
+                  )}
+                </h1>
+                <p className="mb-4 text-base text-text-secondary">
+                  {agency.tagline}
+                </p>
+
+                {/* Stats row */}
+                <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                  {agency.stats.map((stat) => (
+                    <div key={stat.label} className="flex items-baseline gap-1.5">
+                      <span className="text-lg font-bold tracking-[-0.3px] text-text-primary">
+                        {stat.value}
+                      </span>
+                      <span className="text-xs uppercase tracking-[0.5px] text-text-tertiary">
+                        {stat.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Social links */}
+                <div className="flex items-center gap-3">
+                  {agency.websiteUrl && (
+                    <a
+                      href={agency.websiteUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs text-text-tertiary no-underline transition-colors hover:text-text-secondary"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M2 12h20" />
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                      </svg>
+                      Website
+                    </a>
+                  )}
+                  {agency.linkedinUrl && (
+                    <a
+                      href={agency.linkedinUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs text-text-tertiary no-underline transition-colors hover:text-text-secondary"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                      </svg>
+                      LinkedIn
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* About */}
+            <div className="mt-6">
+              <p className="text-[15px] leading-[1.7] text-text-secondary">
+                {agency.description}
+              </p>
+            </div>
+
+            {/* Industry pills */}
+            {agency.industries && agency.industries.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {agency.industries.map((industry) => (
+                  <span
+                    key={industry}
+                    className="rounded-full bg-tag-bg px-3 py-1 text-xs font-medium text-tag-text"
+                  >
+                    {industry}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+
+          {/* Right: hero video/image */}
+          {agency.heroImage && (
+            <div className="w-full shrink-0 lg:w-[420px]">
+              <a
+                href={agency.heroVideoUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block overflow-hidden rounded-[var(--radius)] border border-border no-underline"
+              >
+                <img
+                  src={agency.heroImage}
+                  alt={`${agency.name} video`}
+                  className="block aspect-video w-full object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                />
+                {agency.heroVideoUrl && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 shadow-lg transition-transform duration-200 group-hover:scale-110">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="var(--text-primary)">
+                        <polygon points="6 3 20 12 6 21 6 3" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </a>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ── 2. TEAM ── */}
@@ -289,25 +321,25 @@ export default async function AgencyPage({
           <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
             Case Studies
           </h2>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {agency.caseStudies.map((cs) => (
               <div
                 key={cs.headline}
-                className="rounded-[var(--radius)] border border-border bg-surface p-6"
+                className="flex flex-col rounded-[var(--radius)] border border-border bg-surface p-6 transition-all duration-200 hover:-translate-y-px hover:border-border-hover hover:shadow-[var(--card-shadow-hover)]"
               >
-                <div className="mb-1 text-xs font-semibold uppercase tracking-[0.8px] text-accent">
+                <div className="mb-3 text-xs font-semibold uppercase tracking-[0.8px] text-accent">
                   {cs.label}
                 </div>
-                <h3 className="mb-3 text-lg font-bold tracking-[-0.3px] text-text-primary">
+                <h3 className="mb-1.5 text-sm font-bold tracking-[-0.3px] text-text-primary">
                   {cs.headline}
                 </h3>
-                <div className="flex flex-wrap gap-4">
+                <ul className="mt-auto space-y-1.5 pt-3">
                   {cs.metrics.map((m) => (
-                    <span key={m} className="text-sm text-text-secondary">
+                    <li key={m} className="text-sm leading-snug text-text-secondary">
                       • {m}
-                    </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
