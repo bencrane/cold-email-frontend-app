@@ -7,10 +7,10 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="flex flex-1 flex-col">
       <Nav />
-      {children}
+      <div className="flex-1">{children}</div>
       <Footer />
-    </>
+    </div>
   );
 }

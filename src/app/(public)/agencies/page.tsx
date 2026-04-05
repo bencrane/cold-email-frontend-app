@@ -18,8 +18,7 @@ export default function AgenciesPage() {
           Cold Email Agencies
         </h1>
         <p className="max-w-[560px] text-base leading-[1.65] text-text-secondary">
-          Proven agencies with verified results. Browse profiles, see case
-          studies, and book discovery calls directly.
+          Browse the agencies running cold email at scale.
         </p>
       </div>
 
