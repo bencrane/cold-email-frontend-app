@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { agencies, getAgencyBySlug } from "@/data/agencies";
-import { getToolBySlug } from "@/data/tools";
-import { getApprovedReviews } from "@/data/reviews";
 import { createMetadata } from "@/lib/seo";
-import Breadcrumb from "@/components/ui/breadcrumb";
 import Badge from "@/components/ui/badge";
 import Avatar from "@/components/ui/avatar";
+import LinkedInPostCard from "@/components/linkedin/LinkedInPostCard";
 import type { Metadata } from "next";
+import type { LinkedInPost, LinkedInCreator } from "@/lib/types";
 
 export function generateStaticParams() {
   return agencies.map((a) => ({ slug: a.slug }));
@@ -28,6 +27,67 @@ export async function generateMetadata({
   });
 }
 
+// Dummy LinkedIn posts for agency profile pages
+const dummyCreator: LinkedInCreator = {
+  slug: "marcus-chen",
+  name: "Marcus Chen",
+  initials: "MC",
+  headline: "Founder & CEO at GrowthEngineX",
+  linkedinUrl: "https://linkedin.com/in/marcuschen",
+  active: true,
+};
+
+const dummyPosts: LinkedInPost[] = [
+  {
+    id: "gx-post-1",
+    creatorSlug: "marcus-chen",
+    linkedinPostUrl: "https://linkedin.com/posts/marcuschen-1",
+    content:
+      "We just hit 8M cold emails sent in a single month. Here's what nobody tells you about operating at that scale: your infrastructure becomes your moat. Not your copy, not your list, not your tool stack. The infrastructure.",
+    likes: 847,
+    comments: 63,
+    topic: "Infrastructure",
+    postedAt: "2026-03-28T10:00:00Z",
+    fetchedAt: "2026-04-01T00:00:00Z",
+  },
+  {
+    id: "gx-post-2",
+    creatorSlug: "marcus-chen",
+    linkedinPostUrl: "https://linkedin.com/posts/marcuschen-2",
+    content:
+      "Clay changed our entire enrichment workflow. We used to spend 3 hours per campaign on list building. Now it's 20 minutes. The ROI on Clay alone paid for our entire tool stack this quarter.",
+    likes: 512,
+    comments: 41,
+    topic: "Clay & Enrichment",
+    postedAt: "2026-03-21T14:00:00Z",
+    fetchedAt: "2026-04-01T00:00:00Z",
+  },
+  {
+    id: "gx-post-3",
+    creatorSlug: "marcus-chen",
+    linkedinPostUrl: "https://linkedin.com/posts/marcuschen-3",
+    content:
+      "Deliverability tip that saved one of our clients from a 30% drop in inbox placement: stop sending from new domains on Mondays. Warm them Tuesday through Thursday. The spam filters are more aggressive at the start of the week.",
+    likes: 1203,
+    comments: 89,
+    topic: "Deliverability",
+    postedAt: "2026-03-14T09:00:00Z",
+    fetchedAt: "2026-04-01T00:00:00Z",
+  },
+  {
+    id: "gx-post-4",
+    creatorSlug: "marcus-chen",
+    linkedinPostUrl: "https://linkedin.com/posts/marcuschen-4",
+    content:
+      "The best cold email subject lines aren't clever. They're specific. 'Quick question about [company]'s Q2 hiring push' beats 'Unlock your growth potential' every single time. Specificity signals research. Research signals respect.",
+    likes: 634,
+    comments: 52,
+    topic: "Copywriting",
+    postedAt: "2026-03-07T11:00:00Z",
+    fetchedAt: "2026-04-01T00:00:00Z",
+  },
+];
+
 export default async function AgencyPage({
   params,
 }: {
@@ -37,23 +97,11 @@ export default async function AgencyPage({
   const agency = getAgencyBySlug(slug);
   if (!agency) notFound();
 
-  const stackTools = agency.techStack
-    .map((s) => getToolBySlug(s))
-    .filter(Boolean);
-
-  const approvedReviews = getApprovedReviews(slug);
+  const otherAgencies = agencies.filter((a) => a.slug !== agency.slug).slice(0, 3);
 
   return (
     <main className="mx-auto max-w-[var(--max-width)] px-6 pb-20 pt-12">
-      <Breadcrumb
-        className="mb-8"
-        items={[
-          { label: "Agencies", href: "/agencies" },
-          { label: agency.name },
-        ]}
-      />
-
-      {/* ── HERO BLOCK ── */}
+      {/* ── 1. HEADER + ABOUT + INDUSTRY PILLS ── */}
       <div className="mb-12">
         <div className="flex items-start gap-5">
           <div
@@ -75,8 +123,8 @@ export default async function AgencyPage({
               {agency.tagline}
             </p>
 
-            {/* Stats inline */}
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {/* Stats row */}
+            <div className="mb-4 flex flex-wrap items-center gap-x-5 gap-y-2">
               {agency.stats.map((stat) => (
                 <div key={stat.label} className="flex items-baseline gap-1.5">
                   <span className="text-lg font-bold tracking-[-0.3px] text-text-primary">
@@ -88,252 +136,221 @@ export default async function AgencyPage({
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* CTA pinned right */}
-          {agency.bookingUrl && (
-            <a
-              href={agency.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden shrink-0 rounded-[var(--radius-sm)] bg-text-primary px-5 py-2.5 text-sm font-semibold text-white no-underline transition-colors hover:bg-text-primary-hover sm:block"
-            >
-              Book Discovery Call →
-            </a>
-          )}
+            {/* Social links */}
+            <div className="flex items-center gap-3">
+              {agency.websiteUrl && (
+                <a
+                  href={agency.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-text-tertiary no-underline transition-colors hover:text-text-secondary"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M2 12h20" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                  Website
+                </a>
+              )}
+              {agency.linkedinUrl && (
+                <a
+                  href={agency.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-text-tertiary no-underline transition-colors hover:text-text-secondary"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                  LinkedIn
+                </a>
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* Mobile CTA */}
-        {agency.bookingUrl && (
-          <a
-            href={agency.bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 block w-full rounded-[var(--radius-sm)] bg-text-primary py-2.5 text-center text-sm font-semibold text-white no-underline transition-colors hover:bg-text-primary-hover sm:hidden"
-          >
-            Book Discovery Call →
-          </a>
-        )}
-      </div>
-
-      {/* ── CONTENT ── */}
-      <div className="mx-auto max-w-[820px] space-y-12">
-
-        {/* 1. ABOUT — who they are */}
-        <section>
+        {/* About */}
+        <div className="mt-6">
           <p className="text-[15px] leading-[1.7] text-text-secondary">
             {agency.description}
           </p>
-        </section>
+        </div>
 
-        {/* 2. SERVICES — what they do */}
-        {agency.services.length > 0 && (
-          <section>
-            <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
-              Services
-            </h2>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {agency.services.map((service) => (
-                <div
-                  key={service.title}
-                  className="rounded-[var(--radius)] border border-border bg-surface p-5"
-                >
-                  <div className="mb-2 text-lg">{service.icon}</div>
-                  <h3 className="mb-1 text-sm font-semibold text-text-primary">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm leading-[1.5] text-text-secondary">
-                    {service.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
+        {/* Industry pills */}
+        {agency.industries && agency.industries.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {agency.industries.map((industry) => (
+              <span
+                key={industry}
+                className="rounded-full bg-tag-bg px-3 py-1 text-xs font-medium text-tag-text"
+              >
+                {industry}
+              </span>
+            ))}
+          </div>
         )}
+      </div>
 
-        {/* 3. CASE STUDIES — proof it works */}
-        {agency.caseStudies.length > 0 && (
-          <section>
-            <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
-              Case Studies
-            </h2>
-            <div className="space-y-4">
-              {agency.caseStudies.map((cs) => (
-                <div
-                  key={cs.headline}
-                  className="rounded-[var(--radius)] border border-border bg-surface p-6"
-                >
-                  <div className="mb-1 text-xs font-semibold uppercase tracking-[0.8px] text-accent">
-                    {cs.label}
-                  </div>
-                  <h3 className="mb-3 text-lg font-bold tracking-[-0.3px] text-text-primary">
-                    {cs.headline}
-                  </h3>
-                  <div className="flex flex-wrap gap-4">
-                    {cs.metrics.map((m) => (
-                      <span key={m} className="text-sm text-text-secondary">
-                        • {m}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* 4. TECH STACK — what tools they use (horizontal, not sidebar) */}
-        {stackTools.length > 0 && (
-          <section>
-            <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
-              Tech Stack
-            </h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              {stackTools.map(
-                (tool) =>
-                  tool && (
-                    <Link
-                      key={tool.slug}
-                      href={`/tools/${tool.slug}`}
-                      className="flex items-center gap-3 rounded-[var(--radius)] border border-border bg-surface p-4 no-underline transition-all hover:border-border-hover hover:shadow-[var(--card-shadow)]"
-                    >
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-tag-bg text-base">
-                        {tool.icon}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-sm font-medium text-text-primary">
-                          {tool.name}
-                        </div>
-                        <div className="truncate text-xs text-text-tertiary">
-                          {tool.categories[0]
-                            ?.split("-")
-                            .map(
-                              (w) => w.charAt(0).toUpperCase() + w.slice(1),
-                            )
-                            .join(" ")}
-                        </div>
-                      </div>
-                    </Link>
-                  ),
-              )}
-            </div>
-          </section>
-        )}
-
-        {/* 5. TEAM — who you'll work with */}
-        {agency.team.length > 0 && (
-          <section>
-            <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
-              Team
-            </h2>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {agency.team.map((member) => (
-                <div
-                  key={member.name}
-                  className="flex flex-col items-center rounded-[var(--radius)] border border-border bg-surface p-5 text-center"
-                >
-                  <Avatar
-                    initials={member.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                    color={agency.color}
-                    size="lg"
-                  />
-                  <div className="mt-3 text-sm font-medium text-text-primary">
+      {/* ── 2. TEAM ── */}
+      {agency.team.length > 0 && (
+        <section className="mb-12">
+          <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
+            Team
+          </h2>
+          <div className="flex flex-wrap gap-4">
+            {agency.team.slice(0, 4).map((member) => (
+              <div
+                key={member.name}
+                className="flex items-center gap-3 rounded-[var(--radius)] border border-border bg-surface px-5 py-4"
+              >
+                <Avatar
+                  initials={member.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
+                  color={agency.color}
+                  size="sm"
+                />
+                <div>
+                  <div className="text-sm font-medium text-text-primary">
                     {member.name}
                   </div>
                   <div className="text-xs text-text-tertiary">
                     {member.role}
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-        {/* 6. TESTIMONIALS — social proof */}
-        {(agency.testimonials.length > 0 || approvedReviews.length > 0) && (
-          <section>
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold tracking-[-0.3px]">
-                Testimonials
-              </h2>
-              <Link
-                href={`/agencies/${agency.slug}/review`}
-                className="text-sm font-medium text-accent no-underline hover:underline"
+      {/* ── 3. SERVICES ── */}
+      {agency.services.length > 0 && (
+        <section className="mb-12">
+          <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
+            Services
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {agency.services.slice(0, 4).map((service) => (
+              <div
+                key={service.title}
+                className="rounded-[var(--radius)] border border-border bg-surface p-5"
               >
-                Leave a Review →
-              </Link>
-            </div>
-            <div className="space-y-4">
-              {agency.testimonials.map((t) => (
-                <div
-                  key={t.name}
-                  className="rounded-[var(--radius)] border border-border bg-surface p-6"
-                >
-                  <p className="mb-4 font-display text-lg italic leading-[1.5] text-text-primary">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                  <div>
-                    <div className="text-sm font-semibold text-text-primary">
-                      {t.name}
-                    </div>
-                    <div className="text-xs text-text-tertiary">
-                      {t.title}, {t.company}
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {approvedReviews.map((r) => (
-                <div
-                  key={r.id}
-                  className="rounded-[var(--radius)] border border-border bg-surface p-6"
-                >
-                  {r.rating && (
-                    <div className="mb-2 text-sm text-star-hover">
-                      {"★".repeat(r.rating)}
-                      {"☆".repeat(5 - r.rating)}
-                    </div>
-                  )}
-                  <p className="mb-4 font-display text-lg italic leading-[1.5] text-text-primary">
-                    &ldquo;{r.text}&rdquo;
-                  </p>
-                  <div>
-                    <div className="text-sm font-semibold text-text-primary">
-                      {r.name}
-                    </div>
-                    <div className="text-xs text-text-tertiary">
-                      {r.jobTitle}, {r.company}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+                <div className="mb-2 text-lg">{service.icon}</div>
+                <h3 className="mb-1 text-sm font-semibold text-text-primary">
+                  {service.title}
+                </h3>
+                <p className="text-sm leading-[1.5] text-text-secondary">
+                  {service.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-        {/* Bottom CTA */}
-        {agency.bookingUrl && (
-          <section className="rounded-[var(--radius)] border border-border bg-surface p-8 text-center">
-            <h2 className="mb-2 text-lg font-semibold text-text-primary">
-              Ready to scale your outbound?
-            </h2>
-            <p className="mb-4 text-sm text-text-secondary">
-              Schedule a discovery call with {agency.name} to discuss your
-              goals.
-            </p>
-            <a
-              href={agency.bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-[var(--radius-sm)] bg-text-primary px-6 py-2.5 text-sm font-semibold text-white no-underline transition-colors hover:bg-text-primary-hover"
+      {/* ── 4. LINKEDIN POSTS ── */}
+      <section className="mb-12">
+        <div className="mb-4 flex items-baseline justify-between">
+          <h2 className="text-xl font-semibold tracking-[-0.3px]">
+            Recent posts
+          </h2>
+          <a
+            href={agency.linkedinUrl || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-accent no-underline hover:underline"
+          >
+            View on LinkedIn →
+          </a>
+        </div>
+        <div className="scrollbar-hide flex gap-4 overflow-x-auto">
+          {dummyPosts.map((post) => (
+            <LinkedInPostCard
+              key={post.id}
+              post={post}
+              creator={dummyCreator}
+              variant="compact"
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* ── 5. CASE STUDIES ── */}
+      {agency.caseStudies.length > 0 && (
+        <section className="mb-12">
+          <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
+            Case Studies
+          </h2>
+          <div className="space-y-4">
+            {agency.caseStudies.map((cs) => (
+              <div
+                key={cs.headline}
+                className="rounded-[var(--radius)] border border-border bg-surface p-6"
+              >
+                <div className="mb-1 text-xs font-semibold uppercase tracking-[0.8px] text-accent">
+                  {cs.label}
+                </div>
+                <h3 className="mb-3 text-lg font-bold tracking-[-0.3px] text-text-primary">
+                  {cs.headline}
+                </h3>
+                <div className="flex flex-wrap gap-4">
+                  {cs.metrics.map((m) => (
+                    <span key={m} className="text-sm text-text-secondary">
+                      • {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── 6. OTHER AGENCIES ── */}
+      <section>
+        <div className="mb-4 flex items-baseline justify-between">
+          <h2 className="text-xl font-semibold tracking-[-0.3px]">
+            Other agencies
+          </h2>
+          <Link
+            href="/agencies"
+            className="text-sm font-medium text-accent no-underline hover:underline"
+          >
+            View all agencies →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {otherAgencies.map((other) => (
+            <Link
+              key={other.slug}
+              href={`/agencies/${other.slug}`}
+              className="flex gap-4 rounded-[var(--radius)] border border-border bg-surface p-5 no-underline transition-all duration-200 hover:-translate-y-px hover:border-border-hover hover:shadow-[var(--card-shadow-hover)]"
             >
-              Book Discovery Call →
-            </a>
-          </section>
-        )}
-      </div>
+              <div
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                style={{ background: other.color }}
+              >
+                {other.logo}
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="mb-0.5 text-sm font-semibold text-text-primary">
+                  {other.name}
+                </h3>
+                <p className="mb-2 line-clamp-1 text-xs text-text-secondary">
+                  {other.tagline}
+                </p>
+                <span className="text-xs font-semibold text-accent">
+                  {other.stats[0]?.value} {other.stats[0]?.label.toLowerCase()}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

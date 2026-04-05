@@ -59,6 +59,9 @@ export interface Agency {
   techStack: string[];
   videos: { title: string; url: string }[];
   bookingUrl?: string;
+  industries?: string[];
+  websiteUrl?: string;
+  linkedinUrl?: string;
 }
 
 export type EditorialType =
