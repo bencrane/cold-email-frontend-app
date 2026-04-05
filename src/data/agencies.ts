@@ -44,6 +44,8 @@ export const agencies: Agency[] = [
     industries: ["SaaS", "Fintech", "DevTools", "Cybersecurity", "MarTech"],
     websiteUrl: "https://growthenginex.com",
     linkedinUrl: "https://linkedin.com/company/growthenginex",
+    heroImage: "/agencies/growthenginex-hero.png",
+    heroVideoUrl: "https://youtube.com/watch?v=example1",
   },
   {
     slug: "leadbird",

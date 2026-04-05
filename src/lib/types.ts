@@ -62,6 +62,8 @@ export interface Agency {
   industries?: string[];
   websiteUrl?: string;
   linkedinUrl?: string;
+  heroImage?: string;
+  heroVideoUrl?: string;
 }
 
 export type EditorialType =
