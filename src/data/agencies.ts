@@ -41,6 +41,9 @@ export const agencies: Agency[] = [
       { title: "How We Send 8M Emails a Month", url: "https://youtube.com/watch?v=example1" },
     ],
     bookingUrl: "https://calendly.com/growthenginex/discovery",
+    industries: ["SaaS", "Fintech", "DevTools", "Cybersecurity", "MarTech"],
+    websiteUrl: "https://growthenginex.com",
+    linkedinUrl: "https://linkedin.com/company/growthenginex",
   },
   {
     slug: "leadbird",
@@ -70,6 +73,9 @@ export const agencies: Agency[] = [
     techStack: ["instantly", "smartlead", "apollo"],
     videos: [],
     bookingUrl: "https://leadbird.io/book",
+    industries: ["SaaS", "E-commerce", "Recruiting", "Real Estate"],
+    websiteUrl: "https://leadbird.io",
+    linkedinUrl: "https://linkedin.com/company/leadbird",
   },
   {
     slug: "coldiq",
@@ -96,6 +102,9 @@ export const agencies: Agency[] = [
     testimonials: [],
     techStack: ["clay", "instantly", "apollo"],
     videos: [],
+    industries: ["SaaS", "HealthTech", "DevTools", "AI/ML"],
+    websiteUrl: "https://coldiq.com",
+    linkedinUrl: "https://linkedin.com/company/coldiq",
   },
   {
     slug: "revgrowth",
@@ -122,6 +131,9 @@ export const agencies: Agency[] = [
     testimonials: [],
     techStack: ["clay", "instantly", "lemlist"],
     videos: [],
+    industries: ["SaaS", "Fintech", "E-commerce", "Healthcare"],
+    websiteUrl: "https://revgrowth.ai",
+    linkedinUrl: "https://linkedin.com/company/revgrowth-ai",
   },
 ];
 
