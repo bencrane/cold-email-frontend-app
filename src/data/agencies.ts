@@ -12,8 +12,8 @@ export const agencies: Agency[] = [
     verified: true,
     stats: [
       { label: "Emails / month", value: "8M+" },
-      { label: "Avg Reply Rate", value: "12%" },
-      { label: "Clients Served", value: "80+" },
+      { label: "Clients served", value: "80+" },
+      { label: "Founded", value: "2021" },
     ],
     team: [
       { name: "Marcus Chen", role: "Founder & CEO", linkedin: "https://linkedin.com/in/marcuschen" },
@@ -53,8 +53,8 @@ export const agencies: Agency[] = [
     verified: true,
     stats: [
       { label: "Emails / month", value: "10M+" },
-      { label: "Clients Served", value: "200+" },
-      { label: "Team Size", value: "50+" },
+      { label: "Clients served", value: "200+" },
+      { label: "Founded", value: "2019" },
     ],
     team: [
       { name: "Alex Berman", role: "CEO" },
@@ -81,9 +81,9 @@ export const agencies: Agency[] = [
     color: "#7C3AED",
     verified: true,
     stats: [
-      { label: "MRR Generated", value: "$5M" },
-      { label: "Avg Reply Rate", value: "15%" },
-      { label: "Clay Workflows", value: "100+" },
+      { label: "Emails / month", value: "2M+" },
+      { label: "Clients served", value: "50+" },
+      { label: "Founded", value: "2022" },
     ],
     team: [],
     services: [
@@ -107,9 +107,9 @@ export const agencies: Agency[] = [
     color: "#0D9488",
     verified: true,
     stats: [
-      { label: "Avg Reply Rate", value: "14%" },
-      { label: "Meetings Booked", value: "500+/mo" },
-      { label: "Industries", value: "12+" },
+      { label: "Emails / month", value: "3M+" },
+      { label: "Clients served", value: "60+" },
+      { label: "Founded", value: "2020" },
     ],
     team: [],
     services: [

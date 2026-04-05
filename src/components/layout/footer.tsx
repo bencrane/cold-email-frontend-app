@@ -14,7 +14,7 @@ export default function Footer() {
       <div className="text-sm font-semibold text-text-primary">
         ColdEmail.com
         <span className="ml-3 text-[13px] font-normal text-text-tertiary">
-          The independent resource for outbound.
+          Everything you need to land in the inbox.
         </span>
       </div>
       <div className="flex gap-6">
