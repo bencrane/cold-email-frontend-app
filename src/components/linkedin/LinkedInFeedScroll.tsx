@@ -26,7 +26,19 @@ export default function LinkedInFeedScroll({
   }, []);
 
   const scroll = (direction: "left" | "right") => {
-    scrollRef.current?.scrollBy({
+    const el = scrollRef.current;
+    if (!el) return;
+
+    if (direction === "right" && !canScrollRight) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+    if (direction === "left" && !canScrollLeft) {
+      el.scrollTo({ left: el.scrollWidth, behavior: "smooth" });
+      return;
+    }
+
+    el.scrollBy({
       left: direction === "left" ? -320 : 320,
       behavior: "smooth",
     });
@@ -46,77 +58,71 @@ export default function LinkedInFeedScroll({
         </Link>
       </div>
 
-      <div className="group relative">
-        {/* Left arrow */}
-        {canScrollLeft && (
-          <button
-            onClick={() => scroll("left")}
-            className="absolute top-1/2 left-0 z-10 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface/90 shadow-[var(--card-shadow)] opacity-0 transition-opacity group-hover:opacity-100 md:flex"
-            aria-label="Scroll left"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+      {/* Scroll container */}
+      <div
+        ref={scrollRef}
+        onScroll={updateScrollState}
+        className="scrollbar-hide flex gap-4 overflow-x-auto scroll-smooth"
+      >
+        {posts.map((post, index) => {
+          const creator = getCreatorBySlug(post.creatorSlug);
+          if (!creator) return null;
+          return (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: index * 0.05, duration: 0.3 }}
             >
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-          </button>
-        )}
+              <LinkedInPostCard
+                post={post}
+                creator={creator}
+                variant="compact"
+              />
+            </motion.div>
+          );
+        })}
+      </div>
 
-        {/* Right arrow */}
-        {canScrollRight && (
-          <button
-            onClick={() => scroll("right")}
-            className="absolute top-1/2 right-0 z-10 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface/90 shadow-[var(--card-shadow)] opacity-0 transition-opacity group-hover:opacity-100 md:flex"
-            aria-label="Scroll right"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </button>
-        )}
-
-        {/* Scroll container */}
-        <div
-          ref={scrollRef}
-          onScroll={updateScrollState}
-          className="scrollbar-hide flex gap-4 overflow-x-auto scroll-smooth"
+      {/* Arrow buttons */}
+      <div className="mt-5 flex justify-center gap-2">
+        <button
+          onClick={() => scroll("left")}
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-surface transition-colors hover:border-border-hover hover:shadow-[var(--card-shadow)]"
+          aria-label="Scroll left"
         >
-          {posts.map((post, index) => {
-            const creator = getCreatorBySlug(post.creatorSlug);
-            if (!creator) return null;
-            return (
-              <motion.div
-                key={post.id}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ delay: index * 0.05, duration: 0.3 }}
-              >
-                <LinkedInPostCard
-                  post={post}
-                  creator={creator}
-                  variant="compact"
-                />
-              </motion.div>
-            );
-          })}
-        </div>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        </button>
+        <button
+          onClick={() => scroll("right")}
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-surface transition-colors hover:border-border-hover hover:shadow-[var(--card-shadow)]"
+          aria-label="Scroll right"
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </button>
       </div>
     </section>
   );

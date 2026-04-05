@@ -21,7 +21,8 @@ export default function Nav() {
           href="/"
           className="text-[17px] font-bold tracking-[-0.3px] text-text-primary no-underline"
         >
-          ColdEmail.com
+          <span className="text-text-primary">Cold</span>
+          <span className="text-accent">Email.com</span>
         </Link>
         <div className="flex items-center gap-8">
           {navLinks.map((link) => (

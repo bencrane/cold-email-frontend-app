@@ -51,9 +51,8 @@ export default function HomePage() {
           Hire the <em className="text-accent">right agency.</em>
         </h1>
         <p className="mx-auto mb-9 max-w-[520px] text-[17px] leading-[1.65] text-text-secondary">
-          The independent resource for evaluating cold email tools, reading
-          honest reviews, and finding proven agencies that actually deliver
-          pipeline.
+          Everything you need to launch campaigns, land in the inbox, and book
+          meetings — with the most scalable channel in B2B.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link
@@ -133,6 +132,53 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Agencies */}
+      <section className="mx-auto max-w-[var(--max-width)] px-6 pb-20">
+        <div className="mb-7 flex items-baseline justify-between">
+          <h2 className="font-display text-[32px] font-normal tracking-[-0.5px]">
+            Featured Agencies
+          </h2>
+          <Link
+            href="/agencies"
+            className="text-sm font-medium text-accent no-underline hover:underline"
+          >
+            View all agencies →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {featuredAgencies.map((agency) => (
+            <Link
+              key={agency.slug}
+              href={`/agencies/${agency.slug}`}
+              className="flex gap-5 rounded-[var(--radius)] border border-border bg-surface p-7 no-underline transition-all duration-200 hover:-translate-y-px hover:border-border-hover hover:shadow-[var(--card-shadow-hover)]"
+            >
+              <div
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[15px] font-bold text-white"
+                style={{ background: agency.color }}
+              >
+                {agency.logo}
+              </div>
+              <div className="flex-1">
+                <h3 className="mb-1 text-base font-semibold tracking-[-0.2px] text-text-primary">
+                  {agency.name}
+                  {agency.verified && (
+                    <Badge variant="verified" className="ml-2 align-middle">
+                      Verified
+                    </Badge>
+                  )}
+                </h3>
+                <p className="mb-3 line-clamp-2 text-sm leading-[1.5] text-text-secondary">
+                  {agency.description}
+                </p>
+                <span className="text-[13px] font-semibold text-accent">
+                  {agency.stats[0]?.value} {agency.stats[0]?.label.toLowerCase()}
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Playbooks */}
       <section className="mx-auto max-w-[var(--max-width)] px-6 pb-20">
         <div className="mb-7 flex items-baseline justify-between">
@@ -177,53 +223,6 @@ export default function HomePage() {
                 <div className="mt-3 text-xs text-text-tertiary">
                   {pb.readTime}
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Agencies */}
-      <section className="mx-auto max-w-[var(--max-width)] px-6 pb-20">
-        <div className="mb-7 flex items-baseline justify-between">
-          <h2 className="font-display text-[32px] font-normal tracking-[-0.5px]">
-            Proven Agencies
-          </h2>
-          <Link
-            href="/agencies"
-            className="text-sm font-medium text-accent no-underline hover:underline"
-          >
-            View all agencies →
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {featuredAgencies.map((agency) => (
-            <Link
-              key={agency.slug}
-              href={`/agencies/${agency.slug}`}
-              className="flex gap-5 rounded-[var(--radius)] border border-border bg-surface p-7 no-underline transition-all duration-200 hover:-translate-y-px hover:border-border-hover hover:shadow-[var(--card-shadow-hover)]"
-            >
-              <div
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-[15px] font-bold text-white"
-                style={{ background: agency.color }}
-              >
-                {agency.logo}
-              </div>
-              <div className="flex-1">
-                <h3 className="mb-1 text-base font-semibold tracking-[-0.2px] text-text-primary">
-                  {agency.name}
-                  {agency.verified && (
-                    <Badge variant="verified" className="ml-2 align-middle">
-                      Verified
-                    </Badge>
-                  )}
-                </h3>
-                <p className="mb-3 line-clamp-2 text-sm leading-[1.5] text-text-secondary">
-                  {agency.description}
-                </p>
-                <span className="text-[13px] font-semibold text-accent">
-                  {agency.stats[0]?.value} {agency.stats[0]?.label.toLowerCase()}
-                </span>
               </div>
             </Link>
           ))}
