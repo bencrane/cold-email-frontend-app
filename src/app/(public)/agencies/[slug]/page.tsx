@@ -6,6 +6,7 @@ import Badge from "@/components/ui/badge";
 import Avatar from "@/components/ui/avatar";
 import LinkedInPostCard from "@/components/linkedin/LinkedInPostCard";
 import type { Metadata } from "next";
+import { allLeadMagnets } from "@/data/lead-magnets";
 import type { LinkedInPost, LinkedInCreator } from "@/lib/types";
 
 export function generateStaticParams() {
@@ -98,6 +99,9 @@ export default async function AgencyPage({
   if (!agency) notFound();
 
   const otherAgencies = agencies.filter((a) => a.slug !== agency.slug).slice(0, 3);
+  const resources = allLeadMagnets.filter(
+    (lm) => lm.agencySlug === agency.slug && lm.status === "live"
+  );
 
   return (
     <main className="mx-auto max-w-[var(--max-width)] px-6 pb-20 pt-12">
@@ -310,7 +314,49 @@ export default async function AgencyPage({
         </section>
       )}
 
-      {/* ── 6. OTHER AGENCIES ── */}
+      {/* ── 6. RESOURCES ── */}
+      {resources.length > 0 && (
+        <section className="mb-12">
+          <h2 className="mb-4 text-xl font-semibold tracking-[-0.3px]">
+            Free Resources
+          </h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {resources.map((r) => (
+              <Link
+                key={r.id}
+                href={`/agencies/${agency.slug}/resources/${r.slug}`}
+                className="group flex flex-col rounded-[var(--radius)] border border-border bg-surface p-6 no-underline transition-all duration-200 hover:-translate-y-px hover:border-border-hover hover:shadow-[var(--card-shadow-hover)]"
+              >
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-[var(--radius-sm)] bg-tag-bg text-tag-text">
+                  {r.contentType === "video" ? (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                  ) : (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="16" y1="13" x2="8" y2="13" />
+                      <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                  )}
+                </div>
+                <h3 className="mb-1.5 text-sm font-semibold leading-snug text-text-primary">
+                  {r.title}
+                </h3>
+                <p className="mb-4 line-clamp-2 flex-1 text-sm leading-[1.5] text-text-secondary">
+                  {r.description}
+                </p>
+                <span className="text-sm font-medium text-accent transition-colors group-hover:underline">
+                  {r.contentType === "video" ? "Watch now" : "Download"} →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── 7. OTHER AGENCIES ── */}
       <section>
         <div className="mb-4 flex items-baseline justify-between">
           <h2 className="text-xl font-semibold tracking-[-0.3px]">
